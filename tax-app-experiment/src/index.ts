@@ -11,6 +11,14 @@ app.post("/check-post", (req, res) => {
   res.send("Hello Post!");
 });
 
+app.post("/check-json", (req, res) => {
+  res.json({ message: "Hello JSON!" });
+});
+
+app.post("/check-status", (req, res) => {
+  res.status(500).json({ message: "Hello StatusCode!" });
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
