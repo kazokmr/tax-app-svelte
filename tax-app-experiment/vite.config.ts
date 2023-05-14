@@ -1,4 +1,5 @@
 import { defineConfig } from "vitest/config";
+import { VitePluginNode } from "vite-plugin-node";
 
 export default defineConfig({
   test: {
@@ -14,4 +15,16 @@ export default defineConfig({
     ],
     outputFile: "./reports/vitest/vitest-report.xml",
   },
+  server: {
+    port: 3000,
+  },
+  plugins: [
+    ...VitePluginNode({
+      adapter: "express",
+      appPath: "./src/index.ts",
+      exportName: "viteNodeApp",
+      tsCompiler: "esbuild",
+      swcOptions: {},
+    }),
+  ],
 });
