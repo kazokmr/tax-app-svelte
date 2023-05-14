@@ -4,25 +4,20 @@ const app = express();
 
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
+type CalcInput = {
+  yearsOfService: number;
+  isDisability: boolean;
+  isOfficer: boolean;
+  severancePay: number;
+};
 
-app.post("/check-post", (req, res) => {
-  res.send("Hello Post!");
-});
+const calcTax = (input: CalcInput) => {
+  // TODO 退職金の所得税計算
+  return 10000;
+};
 
-app.post("/check-json", (req, res) => {
-  res.json({ message: "Hello JSON!" });
-});
-
-app.post("/check-status", (req, res) => {
-  res.status(500).json({ message: "Hello StatusCode!" });
-});
-
-app.post("/check-body", (req, res) => {
-  console.dir(req.body);
-  res.json({ message: "Hello JSON body!" });
+app.post("/calc-tax", (req, res) => {
+  res.json({ tax: calcTax(req.body) });
 });
 
 export default app;
