@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { calcRetirementIncomeDeduction } from "./calcTax";
+import { calcRetirementIncomeDeduction, calcTaxableRetirementIncome } from "./calcTax";
 
 describe("退職所得控除額", () => {
   describe("勤続年数が20年以下", () => {
@@ -108,6 +108,115 @@ describe("退職所得控除額", () => {
           }
         );
       });
+    });
+  });
+});
+
+describe("課税退職所得金額", () => {
+  describe("役員等の退職金", () => {
+    describe("役員等の勤続年数が5年以下", () => {
+      test.each`
+        isOfficer | yearsOfService | severancePay | retirementIncomeDeduction | expected
+        ${true}   | ${5}           | ${3_000_000} | ${2_000_000}              | ${1_000_000}
+        ${true}   | ${5}           | ${3_000_999} | ${2_000_000}              | ${1_000_000}
+        ${true}   | ${5}           | ${3_001_000} | ${2_000_000}              | ${1_001_000}
+        ${true}   | ${5}           | ${1_000_000} | ${2_000_000}              | ${0}
+      `(
+        "退職金: $severancePay円 - 退職所得控除額: $retirementIncomeDeduction円 -> $expected円",
+        ({ isOfficer, yearsOfService, severancePay, retirementIncomeDeduction, expected }) => {
+          const income = calcTaxableRetirementIncome({
+            isOfficer,
+            yearsOfService,
+            severancePay,
+            retirementIncomeDeduction
+          });
+          expect(income).toBe(expected);
+        }
+      );
+    });
+    describe("役員等の勤続年数が5年を超える", () => {
+      test.each`
+        isOfficer | yearsOfService | severancePay | retirementIncomeDeduction | expected
+        ${true}   | ${6}           | ${3_000_000} | ${2_400_000}              | ${300_000}
+        ${true}   | ${6}           | ${3_001_999} | ${2_400_000}              | ${300_000}
+        ${true}   | ${6}           | ${3_002_000} | ${2_400_000}              | ${301_000}
+        ${true}   | ${6}           | ${1_000_000} | ${2_400_000}              | ${0}
+      `(
+        "(退職金: $severancePay円 - 退職所得控除額: $retirementIncomeDeduction円) * 1/2 -> $expected円",
+        ({ isOfficer, yearsOfService, severancePay, retirementIncomeDeduction, expected }) => {
+          const income = calcTaxableRetirementIncome({
+            isOfficer,
+            yearsOfService,
+            severancePay,
+            retirementIncomeDeduction
+          });
+          expect(income).toBe(expected);
+        }
+      );
+    });
+  });
+  describe("役員等以外の退職金", () => {
+    describe("役員等以外の勤続年数が5年以下", () => {
+      describe("退職金の額から退職所得控除額を差し引いた残額が300万円以下", () => {
+        test.each`
+          isOfficer | yearsOfService | severancePay | retirementIncomeDeduction | expected
+          ${false}  | ${5}           | ${3_000_000} | ${2_000_000}              | ${500_000}
+          ${false}  | ${5}           | ${5_000_000} | ${2_000_000}              | ${1_500_000}
+          ${false}  | ${5}           | ${3_001_999} | ${2_000_000}              | ${500_000}
+          ${false}  | ${5}           | ${3_002_000} | ${2_000_000}              | ${501_000}
+          ${false}  | ${5}           | ${1_000_000} | ${2_000_000}              | ${0}
+        `(
+          "(退職金: $severancePay円 - 退職所得控除額: $retirementIncomeDeduction円) * 1/2 -> $expected円",
+          ({ isOfficer, yearsOfService, severancePay, retirementIncomeDeduction, expected }) => {
+            const income = calcTaxableRetirementIncome({
+              isOfficer,
+              yearsOfService,
+              severancePay,
+              retirementIncomeDeduction
+            });
+            expect(income).toBe(expected);
+          }
+        );
+      });
+      describe("退職金の額から退職所得控除額を差し引いた残額が300万円を超える", () => {
+        test.each`
+          isOfficer | yearsOfService | severancePay | retirementIncomeDeduction | expected
+          ${false}  | ${5}           | ${6_000_000} | ${2_000_000}              | ${2_500_000}
+          ${false}  | ${5}           | ${6_001_999} | ${2_000_000}              | ${2_501_000}
+          ${false}  | ${5}           | ${6_002_000} | ${2_000_000}              | ${2_502_000}
+        `(
+          "150万円 + (退職金: $severancePay円 - (300万円 + 退職所得控除額: $retirementIncomeDeduction円))",
+          ({ isOfficer, yearsOfService, severancePay, retirementIncomeDeduction, expected }) => {
+            const income = calcTaxableRetirementIncome({
+              isOfficer,
+              yearsOfService,
+              severancePay,
+              retirementIncomeDeduction
+            });
+            expect(income).toBe(expected);
+          }
+        );
+      });
+    });
+    describe("役員等以外の勤続年数が5年を超える", () => {
+      test.each`
+        isOfficer | yearsOfService | severancePay | retirementIncomeDeduction | expected
+        ${false}  | ${6}           | ${3_000_000} | ${2_400_000}              | ${300_000}
+        ${false}  | ${6}           | ${3_001_999} | ${2_400_000}              | ${300_000}
+        ${false}  | ${6}           | ${3_002_000} | ${2_400_000}              | ${301_000}
+        ${false}  | ${6}           | ${1_000_000} | ${2_400_000}              | ${0}
+      `(
+        "(退職金: $severancePay円 - 退職所得控除額: $retirementIncomeDeduction円) * 1/2 -> $expected円",
+        ({ isOfficer, yearsOfService, severancePay, retirementIncomeDeduction, expected }) => {
+          const income = calcTaxableRetirementIncome({
+            isOfficer,
+            yearsOfService,
+            severancePay,
+            retirementIncomeDeduction
+          });
+          expect(income).toBe(expected);
+        }
+      );
     });
   });
 });

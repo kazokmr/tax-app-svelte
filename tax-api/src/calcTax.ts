@@ -13,3 +13,33 @@ export const calcRetirementIncomeDeduction = (input: CalcRetirementIncomeDeducti
   }
   return input.isDisability ? deduction + 1_000_000 : deduction;
 };
+
+type CalcTaxableRetirementIncome = {
+  isOfficer: boolean;
+  yearsOfService: number;
+  severancePay: number;
+  retirementIncomeDeduction: number;
+};
+
+export const calcTaxableRetirementIncome = ({
+  isOfficer,
+  yearsOfService,
+  severancePay,
+  retirementIncomeDeduction
+}: CalcTaxableRetirementIncome) => {
+  let paidAfterDeduction = severancePay - retirementIncomeDeduction;
+
+  const income = () => {
+    if (paidAfterDeduction < 0) {
+      return 0;
+    } else if (isOfficer && yearsOfService <= 5) {
+      return paidAfterDeduction;
+    } else if (!isOfficer && yearsOfService <= 5 && paidAfterDeduction > 3_000_000) {
+      return 1_500_000 + (paidAfterDeduction - 3_000_000);
+    } else {
+      return paidAfterDeduction / 2;
+    }
+  };
+
+  return Math.floor(income() / 1000) * 1000;
+};
