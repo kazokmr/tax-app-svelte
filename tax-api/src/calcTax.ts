@@ -11,9 +11,8 @@ export const calcRetirementIncomeDeduction = ({
     if (yearsOfService <= 20) {
       const deduction = 400_000 * yearsOfService;
       return deduction < 800_000 ? 800_000 : deduction;
-    } else {
-      return 8_000_000 + 700_000 * (yearsOfService - 20);
     }
+    return 8_000_000 + 700_000 * (yearsOfService - 20);
   };
   return isDisability ? deduction() + 1_000_000 : deduction();
 };
@@ -36,13 +35,14 @@ export const calcTaxableRetirementIncome = ({
   const income = () => {
     if (paidAfterDeduction < 0) {
       return 0;
-    } else if (isOfficer && yearsOfService <= 5) {
-      return paidAfterDeduction;
-    } else if (!isOfficer && yearsOfService <= 5 && paidAfterDeduction > 3_000_000) {
-      return 1_500_000 + (paidAfterDeduction - 3_000_000);
-    } else {
-      return paidAfterDeduction / 2;
     }
+    if (isOfficer && yearsOfService <= 5) {
+      return paidAfterDeduction;
+    }
+    if (!isOfficer && yearsOfService <= 5 && paidAfterDeduction > 3_000_000) {
+      return 1_500_000 + (paidAfterDeduction - 3_000_000);
+    }
+    return paidAfterDeduction / 2;
   };
 
   return Math.floor(income() / 1000) * 1000;
