@@ -47,3 +47,32 @@ export const calcTaxableRetirementIncome = ({
 
   return Math.floor(income() / 1000) * 1000;
 };
+
+type CalcRetirementIncomeTax = {
+  taxableRetirementIncome: number;
+};
+
+export const calcRetirementIncomeTax = ({ taxableRetirementIncome }: CalcRetirementIncomeTax) => {
+  if (taxableRetirementIncome < 1_000) {
+    return 0;
+  }
+  if (taxableRetirementIncome < 1_950_000) {
+    return taxableRetirementIncome * 0.05;
+  }
+  if (taxableRetirementIncome < 3_300_000) {
+    return taxableRetirementIncome * 0.1 - 97_500;
+  }
+  if (taxableRetirementIncome < 6_950_000) {
+    return taxableRetirementIncome * 0.2 - 427_500;
+  }
+  if (taxableRetirementIncome < 9_000_000) {
+    return taxableRetirementIncome * 0.23 - 636_000;
+  }
+  if (taxableRetirementIncome < 18_000_000) {
+    return taxableRetirementIncome * 0.33 - 1_536_000;
+  }
+  if (taxableRetirementIncome < 40_000_000) {
+    return taxableRetirementIncome * 0.4 - 2_796_000;
+  }
+  return taxableRetirementIncome * 0.45 - 4_796_000;
+};

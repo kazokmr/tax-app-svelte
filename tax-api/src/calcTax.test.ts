@@ -1,5 +1,9 @@
 import { describe, expect, test } from "vitest";
-import { calcRetirementIncomeDeduction, calcTaxableRetirementIncome } from "./calcTax";
+import {
+  calcRetirementIncomeDeduction,
+  calcRetirementIncomeTax,
+  calcTaxableRetirementIncome
+} from "./calcTax";
 
 describe("退職所得控除額", () => {
   describe("勤続年数が20年以下", () => {
@@ -218,5 +222,111 @@ describe("課税退職所得金額", () => {
         }
       );
     });
+  });
+});
+
+describe("令和４年分　所得税額", () => {
+  describe("課税退職所得金額が 1_000円未満 -> 所得税額 0円", () => {
+    test.each`
+      taxableRetirementIncome | expected
+      ${0}                    | ${0}
+    `(
+      "課税退職所得金額: $taxableRetirementIncome円 -> 所得税額: $expected円",
+      ({ taxableRetirementIncome, expected }) => {
+        const incomeTax = calcRetirementIncomeTax({ taxableRetirementIncome });
+        expect(incomeTax).toBe(expected);
+      }
+    );
+  });
+  describe("課税退職所得金額が 1_950_000円未満 -> 税率 5% 控除額 0円", () => {
+    test.each`
+      taxableRetirementIncome | expected
+      ${1_000}                | ${50}
+      ${1_949_000}            | ${97_450}
+    `(
+      "課税退職所得金額: $taxableRetirementIncome円 * 税率: 5% - 控除額: 0円 -> 所得税額: $expected円",
+      ({ taxableRetirementIncome, expected }) => {
+        const incomeTax = calcRetirementIncomeTax({ taxableRetirementIncome });
+        expect(incomeTax).toBe(expected);
+      }
+    );
+  });
+  describe("課税退職所得金額が 3_300_000円未満 -> 税率 10% 控除額 97_500円", () => {
+    test.each`
+      taxableRetirementIncome | expected
+      ${1_950_000}            | ${97_500}
+      ${3_299_000}            | ${232_400}
+    `(
+      "課税退職所得金額: $taxableRetirementIncome円 * 税率: 10% - 控除額: 97_500円 -> 所得税額: $expected円",
+      ({ taxableRetirementIncome, expected }) => {
+        const incomeTax = calcRetirementIncomeTax({ taxableRetirementIncome });
+        expect(incomeTax).toBe(expected);
+      }
+    );
+  });
+  describe("課税退職所得金額が 6_950_000円未満 -> 税率 20% 控除額 427_500円", () => {
+    test.each`
+      taxableRetirementIncome | expected
+      ${3_300_000}            | ${232_500}
+      ${6_949_000}            | ${962_300}
+    `(
+      "課税退職所得金額: $taxableRetirementIncome円 * 税率: 20% - 控除額: 427_500円 -> 所得税額: $expected円",
+      ({ taxableRetirementIncome, expected }) => {
+        const incomeTax = calcRetirementIncomeTax({ taxableRetirementIncome });
+        expect(incomeTax).toBe(expected);
+      }
+    );
+  });
+  describe("課税退職所得金額が 9_000_000円未満 -> 税率 23% 控除額 636_000円", () => {
+    test.each`
+      taxableRetirementIncome | expected
+      ${6_950_000}            | ${962_500}
+      ${8_999_000}            | ${1_433_770}
+    `(
+      "課税退職所得金額: $taxableRetirementIncome円 * 税率: 23% - 控除額: 636_000円 -> 所得税額: $expected円",
+      ({ taxableRetirementIncome, expected }) => {
+        const incomeTax = calcRetirementIncomeTax({ taxableRetirementIncome });
+        expect(incomeTax).toBe(expected);
+      }
+    );
+  });
+  describe("課税退職所得金額が 18_000_000円未満 -> 税率 33% 控除額 1_536_000円", () => {
+    test.each`
+      taxableRetirementIncome | expected
+      ${9_000_000}            | ${1_434_000}
+      ${17_999_000}           | ${4_403_670}
+    `(
+      "課税退職所得金額: $taxableRetirementIncome円 * 税率: 33% - 控除額: 1_536_000円 -> 所得税額: $expected円",
+      ({ taxableRetirementIncome, expected }) => {
+        const incomeTax = calcRetirementIncomeTax({ taxableRetirementIncome });
+        expect(incomeTax).toBe(expected);
+      }
+    );
+  });
+  describe("課税退職所得金額が 40_000_000円未満 -> 税率 40% 控除額 2_796_000円", () => {
+    test.each`
+      taxableRetirementIncome | expected
+      ${18_000_000}           | ${4_404_000}
+      ${39_999_000}           | ${13_203_600}
+    `(
+      "課税退職所得金額: $taxableRetirementIncome円 * 税率: 40% - 控除額: 2_796_000円 -> 所得税額: $expected円",
+      ({ taxableRetirementIncome, expected }) => {
+        const incomeTax = calcRetirementIncomeTax({ taxableRetirementIncome });
+        expect(incomeTax).toBe(expected);
+      }
+    );
+  });
+  describe("課税退職所得金額が 40_000_000円以上 -> 税率 45% 控除額 4_796_000円", () => {
+    test.each`
+      taxableRetirementIncome | expected
+      ${40_000_000}           | ${13_204_000}
+      ${50_000_000}           | ${17_704_000}
+    `(
+      "課税退職所得金額: $taxableRetirementIncome円 * 税率: 45% - 控除額: 4_796_000円 -> 所得税額: $expected円",
+      ({ taxableRetirementIncome, expected }) => {
+        const incomeTax = calcRetirementIncomeTax({ taxableRetirementIncome });
+        expect(incomeTax).toBe(expected);
+      }
+    );
   });
 });
