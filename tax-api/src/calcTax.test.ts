@@ -1,5 +1,6 @@
 import { describe, expect, test } from "vitest";
 import {
+  calcIncomeTaxForSeverancePay,
   calcRetirementIncomeDeduction,
   calcRetirementIncomeTax,
   calcRetirementTotalTax,
@@ -344,6 +345,32 @@ describe("退職金の所得税及び復興特別所得税の源泉徴収税額"
     ({ retirementIncomeTax, expected }) => {
       const totalTax = calcRetirementTotalTax({ retirementIncomeTax });
       expect(totalTax).toBe(expected);
+    }
+  );
+});
+
+describe("退職金の所得税額", () => {
+  test.each`
+    yearsOfService | isDisability | isOfficer | severancePay | expected
+    ${5}           | ${false}     | ${false}  | ${8_000_000} | ${482_422}
+    ${10}          | ${false}     | ${false}  | ${8_000_000} | ${104_652}
+    ${5}           | ${true}      | ${false}  | ${8_000_000} | ${278_222}
+    ${10}          | ${true}      | ${false}  | ${8_000_000} | ${76_575}
+    ${5}           | ${false}     | ${true}   | ${8_000_000} | ${788_722}
+    ${10}          | ${false}     | ${true}   | ${8_000_000} | ${104_652}
+    ${5}           | ${true}      | ${true}   | ${8_000_000} | ${584_522}
+    ${10}          | ${true}      | ${true}   | ${8_000_000} | ${76_575}
+  `(
+    "勤続年数 $yearsOfService年・障害者となったことに直接起因して退職: $isDisability・ " +
+      "役員等: $isOfficer・退職金 $severancePay円 -> $expected円",
+    ({ yearsOfService, isDisability, isOfficer, severancePay, expected }) => {
+      const tax = calcIncomeTaxForSeverancePay({
+        yearsOfService,
+        isDisability,
+        isOfficer,
+        severancePay
+      });
+      expect(tax).toBe(expected);
     }
   );
 });

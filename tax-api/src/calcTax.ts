@@ -83,3 +83,27 @@ type CalcRetirementTotalTax = {
 
 export const calcRetirementTotalTax = ({ retirementIncomeTax }: CalcRetirementTotalTax) =>
   Math.floor(retirementIncomeTax + retirementIncomeTax * 0.021);
+
+type CalcIncomeTaxForSeverancePay = {
+  yearsOfService: number;
+  isDisability: boolean;
+  isOfficer: boolean;
+  severancePay: number;
+};
+
+export const calcIncomeTaxForSeverancePay = ({
+  yearsOfService,
+  isDisability,
+  isOfficer,
+  severancePay
+}: CalcIncomeTaxForSeverancePay) => {
+  const retirementIncomeDeduction = calcRetirementIncomeDeduction({ yearsOfService, isDisability });
+  const taxableRetirementIncome: number = calcTaxableRetirementIncome({
+    isOfficer,
+    yearsOfService,
+    severancePay,
+    retirementIncomeDeduction
+  });
+  const retirementIncomeTax: number = calcRetirementIncomeTax({ taxableRetirementIncome });
+  return calcRetirementTotalTax({ retirementIncomeTax });
+};
