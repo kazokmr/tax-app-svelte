@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 type CalcRetirementIncomeDeductionInput = {
   yearsOfService: number;
   isDisability: boolean;
@@ -84,19 +86,16 @@ type CalcRetirementTotalTax = {
 export const calcRetirementTotalTax = ({ retirementIncomeTax }: CalcRetirementTotalTax) =>
   Math.floor(retirementIncomeTax + retirementIncomeTax * 0.021);
 
-type CalcIncomeTaxForSeverancePay = {
-  yearsOfService: number;
-  isDisability: boolean;
-  isOfficer: boolean;
-  severancePay: number;
-};
+const validatedInput = (input: CalcSeverancePayTaxInput) =>
+  calcSeverancePayTaxInputScheme.safeParse(input);
 
-export const calcIncomeTaxForSeverancePay = ({
-  yearsOfService,
-  isDisability,
-  isOfficer,
-  severancePay
-}: CalcIncomeTaxForSeverancePay) => {
+export const calcIncomeTaxForSeverancePay = (input: CalcSeverancePayTaxInput) => {
+  const result = validatedInput(input);
+  if (!result.success) {
+    throw new Error("Invalid argument.");
+  }
+
+  const { yearsOfService, isDisability, isOfficer, severancePay } = result.data;
   const retirementIncomeDeduction = calcRetirementIncomeDeduction({ yearsOfService, isDisability });
   const taxableRetirementIncome: number = calcTaxableRetirementIncome({
     isOfficer,
@@ -107,3 +106,14 @@ export const calcIncomeTaxForSeverancePay = ({
   const retirementIncomeTax: number = calcRetirementIncomeTax({ taxableRetirementIncome });
   return calcRetirementTotalTax({ retirementIncomeTax });
 };
+
+const calcSeverancePayTaxInputScheme = z
+  .object({
+    yearsOfService: z.number().int().gte(1).lte(100),
+    isDisability: z.boolean(),
+    isOfficer: z.boolean(),
+    severancePay: z.number().int().gte(0).lte(1_000_000_000_000)
+  })
+  .strict();
+
+type CalcSeverancePayTaxInput = z.infer<typeof calcSeverancePayTaxInputScheme>;

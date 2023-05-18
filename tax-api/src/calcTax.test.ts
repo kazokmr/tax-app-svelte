@@ -373,4 +373,51 @@ describe("退職金の所得税額", () => {
       expect(tax).toBe(expected);
     }
   );
+  describe("入力値バリデーション", () => {
+    describe("勤続年数は1以上100以下の整数であること", () => {
+      test.each`
+        yearsOfService
+        ${-1}
+        ${0}
+        ${101}
+        ${10.5}
+        ${null}
+        ${undefined}
+        ${"some string"}
+      `("勤続年数 $yearsOfService年はエラー", ({ yearsOfService }) => {
+        expect(() =>
+          calcIncomeTaxForSeverancePay({
+            yearsOfService,
+            isDisability: false,
+            isOfficer: false,
+            severancePay: 100_000_000
+          })
+        ).toThrowError("Invalid argument.");
+      });
+      test.each`
+        yearsOfService | expected
+        ${1}           | ${39_991_549}
+        ${100}         | ${4_496_484}
+      `("勤続年数 $yearsOfService年は成功", ({ yearsOfService, expected }) => {
+        expect(
+          calcIncomeTaxForSeverancePay({
+            yearsOfService,
+            isDisability: false,
+            isOfficer: false,
+            severancePay: 100_000_000
+          })
+        ).toBe(expected);
+      });
+      test("勤続年数が未定義の場合はエラー", () => {
+        expect(() => {
+          // @ts-ignore
+          calcIncomeTaxForSeverancePay({
+            isDisability: false,
+            isOfficer: false,
+            severancePay: 100_000_000
+          });
+        }).toThrowError("Invalid argument.");
+      });
+    });
+  });
 });

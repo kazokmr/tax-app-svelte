@@ -29,7 +29,8 @@
     "vitest": "^0.31.1"
   },
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "zod": "^3.21.4"
   },
   "type": "module"
 }
