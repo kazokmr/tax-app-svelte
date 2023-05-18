@@ -2,6 +2,7 @@ import { describe, expect, test } from "vitest";
 import {
   calcRetirementIncomeDeduction,
   calcRetirementIncomeTax,
+  calcRetirementTotalTax,
   calcTaxableRetirementIncome
 } from "./calcTax";
 
@@ -329,4 +330,20 @@ describe("令和４年分　所得税額", () => {
       }
     );
   });
+});
+
+describe("退職金の所得税及び復興特別所得税の源泉徴収税額", () => {
+  test.each`
+    retirementIncomeTax | expected
+    ${0}                | ${0}
+    ${50}               | ${51}
+    ${120}              | ${122}
+    ${1000}             | ${1021}
+  `(
+    "所得税: $retirementIncomeTax + 復興特別所得税: $retirementIncomeTax * 2.1% -> $expected (1円未満切り捨て)",
+    ({ retirementIncomeTax, expected }) => {
+      const totalTax = calcRetirementTotalTax({ retirementIncomeTax });
+      expect(totalTax).toBe(expected);
+    }
+  );
 });

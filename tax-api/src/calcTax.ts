@@ -76,3 +76,10 @@ export const calcRetirementIncomeTax = ({ taxableRetirementIncome }: CalcRetirem
   }
   return taxableRetirementIncome * 0.45 - 4_796_000;
 };
+
+type CalcRetirementTotalTax = {
+  retirementIncomeTax: number;
+};
+
+export const calcRetirementTotalTax = ({ retirementIncomeTax }: CalcRetirementTotalTax) =>
+  Math.floor(retirementIncomeTax + retirementIncomeTax * 0.021);
