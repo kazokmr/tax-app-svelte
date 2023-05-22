@@ -107,7 +107,7 @@ export const calcIncomeTaxForSeverancePay = (input: CalcSeverancePayTaxInput) =>
   return calcRetirementTotalTax({ retirementIncomeTax });
 };
 
-const calcSeverancePayTaxInputScheme = z
+export const calcSeverancePayTaxInputScheme = z
   .object({
     yearsOfService: z.number().int().gte(1).lte(100),
     isDisability: z.boolean(),

@@ -1,10 +1,15 @@
 import { Router } from "express";
-import { calcIncomeTaxForSeverancePay } from "./calcTax";
+import { calcIncomeTaxForSeverancePay, calcSeverancePayTaxInputScheme } from "./calcTax";
 
 const router = Router();
 
 router.post("/calc-tax", (req, res) => {
-  const incomeTax = calcIncomeTaxForSeverancePay(req.body);
+  const validationResult = calcSeverancePayTaxInputScheme.safeParse(req.body);
+  if (!validationResult.success) {
+    res.status(400).json({ message: "Invalid parameter." });
+    return;
+  }
+  const incomeTax = calcIncomeTaxForSeverancePay(validationResult.data);
   res.json({ tax: incomeTax });
 });
 
