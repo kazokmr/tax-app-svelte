@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/tax-api.iml" filepath="$PROJECT_DIR$/tax-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/tax-app-advanced.iml" filepath="$PROJECT_DIR$/tax-app-advanced.iml" />
       <module fileurl="file://$PROJECT_DIR$/tax-app-experiment.iml" filepath="$PROJECT_DIR$/tax-app-experiment.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tax-ui.iml" filepath="$PROJECT_DIR$/tax-ui.iml" />
     </modules>
   </component>
 </project>
