@@ -1,5 +1,6 @@
 <script lang="ts">
   import {
+    Button,
     Card,
     CardBody,
     CardHeader,
@@ -52,6 +53,9 @@
           <InputGroupText>円</InputGroupText>
         </InputGroup>
       </FormGroup>
+      <div class="d-md-flex justify-content-md-end">
+        <Button color="primary" type="submit">所得税を計算する</Button>
+      </div>
     </Form>
   </CardBody>
 </Card>
