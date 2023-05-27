@@ -49,8 +49,8 @@
     "vite": "^4.3.9",
     "vitest": "^0.31.1"
   },
-  "type": "module",
   "dependencies": {
     "sveltestrap": "^5.10.0"
-  }
+  },
+  "type": "module"
 }

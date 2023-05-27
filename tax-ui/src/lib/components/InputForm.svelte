@@ -16,22 +16,22 @@
   } from "sveltestrap";
 
   let year = 10;
-  let group = 0;
+  let group = "0";
   let severancePay = 5_000_000;
 </script>
 
-<Card style="width: 400px;">
+<Card style="width: 375px;">
   <CardHeader>
     <div class="text-center">
       <CardTitle>退職金情報を入力してください</CardTitle>
     </div>
   </CardHeader>
-  <CardBody>
+  <CardBody style="height: 420px;">
     <Form>
       <FormGroup>
         <Label style="font-weight: bold">勤続年数</Label>
         <InputGroup style="width: 120px;">
-          <Input type="text" bind:value={year} />
+          <Input type="number" bind:value={year} />
           <InputGroupText>年</InputGroupText>
         </InputGroup>
         <FormText>1年未満の端数は切り上げ</FormText>
@@ -42,9 +42,9 @@
       </FormGroup>
       <FormGroup>
         <Label style="font-weight: bold">役員等以外か役員等か</Label>
-        <br>
-        <FormCheck type="radio" inline="true" bind:group={group} value={0} label="役員等以外" />
-        <FormCheck type="radio" inline="true" bind:group={group} value={1} label="役員等" />
+        <br />
+        <FormCheck type="radio" inline={true} bind:group value="0" label="役員等以外" />
+        <FormCheck type="radio" inline={true} bind:group value="1" label="役員等" />
       </FormGroup>
       <FormGroup>
         <Label style="font-weight: bold">退職金</Label>
