@@ -1,12 +1,12 @@
 <script lang="ts">
-  import { Card, CardBody, CardHeader, CardTitle } from "sveltestrap";
+import { Card, CardBody, CardHeader, CardTitle } from "sveltestrap";
 
-  type ResultProps = {
-    tax: number | null;
-  };
+type ResultProps = {
+  tax: number | null;
+};
 
-  export let { tax }: ResultProps = { tax: null };
-  $: taxStr = tax === null ? "---" : new Intl.NumberFormat("ja-JP").format(tax);
+export let { tax }: ResultProps = { tax: null };
+$: taxStr = tax === null ? "---" : new Intl.NumberFormat("ja-JP").format(tax);
 </script>
 
 <Card style="width: 375px;">
