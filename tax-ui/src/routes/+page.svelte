@@ -1,7 +1,7 @@
 <script lang="ts">
-import Presentation from "$lib/components/Presentation.svelte";
+  import Presentation from "$lib/components/Presentation.svelte";
 
-let tax: number | null;
+  let tax: number | null = null;
 </script>
 
-<Presentation tax="{tax}" />
+<Presentation bind:tax="{tax}" />

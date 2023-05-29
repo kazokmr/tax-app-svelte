@@ -1,13 +1,13 @@
 <script lang="ts">
-import { Col, Container, Row } from "sveltestrap";
-import InputForm from "$lib/components/InputForm.svelte";
-import Result from "$lib/components/Result.svelte";
+  import { Col, Container, Row } from "sveltestrap";
+  import InputForm from "$lib/components/InputForm.svelte";
+  import Result from "$lib/components/Result.svelte";
 
-type PresentationProps = {
-  tax: number | null;
-};
+  type PresentationProps = {
+    tax: number | null;
+  };
 
-export let { tax }: PresentationProps = { tax: null };
+  export let { tax }: PresentationProps = { tax: null };
 </script>
 
 <Container>
