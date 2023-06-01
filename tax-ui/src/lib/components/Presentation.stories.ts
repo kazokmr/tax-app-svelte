@@ -10,6 +10,12 @@ type Story = StoryObj<typeof meta>;
 
 export const Standard: Story = {
   args: {
+    formInputs: {
+      yearsOfService: 10,
+      isDisability: false,
+      isOfficer: "0",
+      severancePay: 5_000_000
+    },
     tax: 10000
   }
 };

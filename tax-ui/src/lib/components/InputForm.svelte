@@ -15,28 +15,14 @@
     Label
   } from "sveltestrap";
 
-  let yearsOfService = 10;
-  let isDisability = false;
-  let isOfficer = "0";
-  let severancePay = 5_000_000;
-
-  type FormInputs = {
-    yearsOfService
-    isDisability
-    isOfficer
-    severancePay
-  }
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const formInputs = {
-      yearsOfService: Number(yearsOfService),
-      isDisability: isDisability,
-      isOfficer: isOfficer === "1",
-      severancePay: Number(severancePay)
-    } satisfies FormInputs;
-    console.log(formInputs);
+  export type InputForm = {
+    yearsOfService: number;
+    isDisability: boolean;
+    isOfficer: string;
+    severancePay: number;
   };
+
+  export let { yearsOfService, isDisability, isOfficer, severancePay }: InputForm = {};
 </script>
 
 <Card style="width: 375px;">
@@ -46,7 +32,7 @@
     </div>
   </CardHeader>
   <CardBody style="height: 420px;">
-    <Form on:submit={handleSubmit}>
+    <Form on:submit>
       <FormGroup>
         <Label style="font-weight: bold">勤続年数</Label>
         <InputGroup style="width: 120px;">
@@ -67,8 +53,14 @@
       <FormGroup>
         <Label style="font-weight: bold">役員等以外か役員等か</Label>
         <br />
-        <FormCheck type="radio" inline="{true}" bind:group={isOfficer} value="0" label="役員等以外" />
-        <FormCheck type="radio" inline="{true}" bind:group={isOfficer} value="1" label="役員等" />
+        <FormCheck
+          type="radio"
+          inline="{true}"
+          bind:group="{isOfficer}"
+          value="0"
+          label="役員等以外"
+        />
+        <FormCheck type="radio" inline="{true}" bind:group="{isOfficer}" value="1" label="役員等" />
       </FormGroup>
       <FormGroup>
         <Label style="font-weight: bold">退職金</Label>

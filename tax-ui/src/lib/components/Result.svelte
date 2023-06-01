@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Card, CardBody, CardHeader, CardTitle } from "sveltestrap";
 
-  type ResultProps = {
+  export type ResultProps = {
     tax: number | null;
   };
 

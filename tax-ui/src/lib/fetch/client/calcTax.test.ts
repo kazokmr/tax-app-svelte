@@ -13,7 +13,6 @@ const rootPath = "http://localhost:3000";
 
 describe("所得税計算APIをコールする", () => {
   test("所得税計算APIを呼び出せる", async () => {
-
     // Begin
     // mswのHandlerを設定する
     server.use(
@@ -32,15 +31,15 @@ describe("所得税計算APIをコールする", () => {
 
     // Then
     expect(response.status).toBe(200);
-    expect((await response.json())).toStrictEqual({ tax: 15_315 });
+    expect(await response.json()).toStrictEqual({ tax: 15_315 });
   });
 
   test("所得税計算APIがBad Requestを返す場合", async () => {
-
     // Begin
     server.use(
       rest.post(`${rootPath}/calc-tax`, (req, res, context) =>
-        res(context.status(400), context.json({ message: "Invalid parameter." })))
+        res(context.status(400), context.json({ message: "Invalid parameter." }))
+      )
     );
 
     // When
@@ -52,7 +51,7 @@ describe("所得税計算APIをコールする", () => {
     });
 
     // Then
-    expect(response.ok).toBe(false);  // Response.ok は status 2xx のみTrue
+    expect(response.ok).toBe(false); // Response.ok は status 2xx のみTrue
     expect(response.status).toBe(400);
     expect(await response.json()).toStrictEqual({ message: "Invalid parameter." });
   });

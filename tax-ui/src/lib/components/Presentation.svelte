@@ -1,12 +1,12 @@
 <script lang="ts">
-  import { Col, Container, Row } from "sveltestrap";
+  import type { InputFormProps, ResultProps } from "$lib/components/InputForm.svelte";
   import InputForm from "$lib/components/InputForm.svelte";
   import Result from "$lib/components/Result.svelte";
+  import { Col, Container, Row } from "sveltestrap";
 
-  type PresentationProps = {
-    tax: number | null;
-  };
+  type PresentationProps = InputFormProps & ResultProps;
 
+  export let { formInputs }: PresentationProps = {};
   export let { tax }: PresentationProps = { tax: null };
 </script>
 
@@ -19,7 +19,7 @@
   <Row>
     <Col xs="2" />
     <Col xs="2">
-      <InputForm />
+      <InputForm {...formInputs} on:submit />
     </Col>
     <Col xs="2" />
     <Col xs="2">
