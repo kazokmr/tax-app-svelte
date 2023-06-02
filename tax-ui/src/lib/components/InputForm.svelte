@@ -12,7 +12,7 @@
 <div class="border-2 rounded-xl w-96 h-[450px]">
   <div class="border-b-2 bg-gray-100 leading-10 text-lg text-center">退職金情報を入力してください</div>
   <div>
-    <form on:submit|preventDefault>
+    <form method="post" on:submit|preventDefault>
       <label for="yearsOfService" class="block mx-3 mt-3 mb-2 text-base font-medium text-gray-900">勤続年数</label>
       <div class="inline-flex ml-4">
         <input type="number" name="yearsOfService" id="yearsOfService" bind:value="{yearsOfService}"
@@ -44,13 +44,13 @@
       <label for="severancePay" class="block mx-3 mt-3 mb-2 text-base font-medium text-gray-900">退職金</label>
       <div class="inline-flex ml-4">
         <input type="number" name="severancePay" id="severancePay" bind:value="{severancePay}"
-               class="rounded-none rounded-l-lg border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 w-36 text-base border-gray-300 p-2.5" />
+               class=" rounded-none rounded-l-lg border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 w-36 text-base border-gray-300 p-2.5" />
         <span
           class="inline-flex items-center px-2.5 text-base text-gray-900 bg-gray-200 border border-l-0 border-gray-300 rounded-r-md">円</span>
       </div>
-      <div class="grid justify-end m-3">
+      <div class="m-3">
         <button type="submit"
-                class="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2.5 mr-2 mb-2">
+                class="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2.5 mr-2 mb-2 ml-auto block">
           所得税を計算する
         </button>
       </div>

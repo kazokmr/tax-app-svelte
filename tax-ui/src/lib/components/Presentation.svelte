@@ -9,7 +9,7 @@
   export let { tax }: PresentationProps = { tax: null };
 </script>
 <div class="container w-[870px]">
-  <p class="text-center">退職金の所得税計算アプリケーション</p>
+  <h2 class="text-center text-2xl font-semibold">退職金の所得税計算アプリケーション</h2>
   <div class="columns-2">
     <div class="">
       <InputForm {...formInputs} on:submit />

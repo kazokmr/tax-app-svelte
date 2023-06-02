@@ -10,11 +10,13 @@
   } satisfies InputForm;
 
   const handleInputFormSubmit = (event) => {
-    event.preventDefault();
-    console.log(formInputs);
+    const formData = new FormData(event.target);
+    for (let data of formData.entries()) {
+      console.log(data);
+    }
   };
 
   let tax: number | null = null;
 </script>
 
-<Presentation {...formInputs} bind:tax="{tax}" on:submit|preventDefault={handleInputFormSubmit} />
+<Presentation formInputs="{formInputs}" bind:tax="{tax}" on:submit={handleInputFormSubmit} />
