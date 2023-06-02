@@ -1,15 +1,16 @@
 <script lang="ts">
-  import type { InputForm } from "$lib/components/InputForm.svelte";
   import Presentation from "$lib/components/Presentation.svelte";
   import type { CalcTaxParam, CalcTaxResult } from "$lib/fetch/client/calcTax";
   import { calcTax } from "$lib/fetch/client/calcTax";
 
-  const formInputs = {
-    yearsOfService: 10,
-    isDisability: false,
-    isOfficer: "0",
-    severancePay: 5_000_000
-  } satisfies InputForm;
+  // const formInputs = {
+  //   yearsOfService: 10,
+  //   isDisability: false,
+  //   isOfficer: "0",
+  //   severancePay: 5_000_000
+  // } satisfies InputForm;
+
+  let tax: number | null = null;
 
   const handleInputFormSubmit = async (event) => {
     const formData = new FormData(event.target);
@@ -22,11 +23,9 @@
     const response = await calcTax(param);
     if (response.ok) {
       const json = await response.json() satisfies CalcTaxResult;
-      console.log(json);
+      tax = json.tax;
     }
   };
-
-  let tax: number | null = null;
 </script>
 
-<Presentation formInputs="{formInputs}" bind:tax="{tax}" on:submit={handleInputFormSubmit} />
+<Presentation tax="{tax}" on:submit={handleInputFormSubmit} />
