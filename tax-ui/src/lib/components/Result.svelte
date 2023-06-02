@@ -1,24 +1,14 @@
 <script lang="ts">
-  import { Card, CardBody, CardHeader, CardTitle } from "sveltestrap";
-
   export type ResultProps = {
     tax: number | null;
   };
-
   export let { tax }: ResultProps = { tax: null };
   $: taxStr = tax === null ? "---" : new Intl.NumberFormat("ja-JP").format(tax);
 </script>
-
-<Card style="width: 375px;">
-  <CardHeader>
-    <div class="text-center">
-      <CardTitle>退職金にかかる所得税</CardTitle>
-    </div>
-  </CardHeader>
-  <CardBody style="height: 420px;">
-    <div class="text-center">
-      <span class="fs-1">{taxStr}</span>
-      <span>円</span>
-    </div>
-  </CardBody>
-</Card>
+<div class="border-2 rounded-xl w-96 h-[450px]">
+  <div class="border-b-2 bg-gray-100 leading-10 text-lg text-center">退職金にかかる所得税</div>
+  <div class="my-12 text-center">
+    <span class="text-5xl">{taxStr}</span>
+    <span>円</span>
+  </div>
+</div>

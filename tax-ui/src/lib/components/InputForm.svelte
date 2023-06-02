@@ -1,19 +1,4 @@
 <script lang="ts">
-  import {
-    Button,
-    Card,
-    CardBody,
-    CardHeader,
-    CardTitle,
-    Form,
-    FormCheck,
-    FormGroup,
-    FormText,
-    Input,
-    InputGroup,
-    InputGroupText,
-    Label
-  } from "sveltestrap";
 
   export type InputForm = {
     yearsOfService: number;
@@ -24,54 +9,51 @@
 
   export let { yearsOfService, isDisability, isOfficer, severancePay }: InputForm = {};
 </script>
-
-<Card style="width: 375px;">
-  <CardHeader>
-    <div class="text-center">
-      <CardTitle>退職金情報を入力してください</CardTitle>
-    </div>
-  </CardHeader>
-  <CardBody style="height: 420px;">
-    <Form on:submit>
-      <FormGroup>
-        <Label style="font-weight: bold">勤続年数</Label>
-        <InputGroup style="width: 120px;">
-          <Input type="number" name="yearsOfService" bind:value="{yearsOfService}" />
-          <InputGroupText>年</InputGroupText>
-        </InputGroup>
-        <FormText>1年未満の端数は切り上げ</FormText>
-      </FormGroup>
-      <FormGroup>
-        <Label style="font-weight: bold">退職基因</Label>
-        <FormCheck
-          type="checkbox"
-          name="isDisability"
-          bind:checked="{isDisability}"
-          label="障害者となったことに直接基因して退職した"
-        />
-      </FormGroup>
-      <FormGroup>
-        <Label style="font-weight: bold">役員等以外か役員等か</Label>
-        <br />
-        <FormCheck
-          type="radio"
-          inline="{true}"
-          bind:group="{isOfficer}"
-          value="0"
-          label="役員等以外"
-        />
-        <FormCheck type="radio" inline="{true}" bind:group="{isOfficer}" value="1" label="役員等" />
-      </FormGroup>
-      <FormGroup>
-        <Label style="font-weight: bold">退職金</Label>
-        <InputGroup style="width: 200px">
-          <Input type="number" name="severancePay" bind:value="{severancePay}" />
-          <InputGroupText>円</InputGroupText>
-        </InputGroup>
-      </FormGroup>
-      <div class="d-md-flex justify-content-md-end">
-        <Button color="primary" type="submit">所得税を計算する</Button>
+<div class="border-2 rounded-xl w-96 h-[450px]">
+  <div class="border-b-2 bg-gray-100 leading-10 text-lg text-center">退職金情報を入力してください</div>
+  <div>
+    <form on:submit|preventDefault>
+      <label for="yearsOfService" class="block mx-3 mt-3 mb-2 text-base font-medium text-gray-900">勤続年数</label>
+      <div class="inline-flex ml-4">
+        <input type="number" name="yearsOfService" id="yearsOfService" bind:value="{yearsOfService}"
+               class="rounded-none rounded-l-lg border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 w-24 text-base border-gray-300 p-2.5" />
+        <span
+          class="inline-flex items-center px-2.5 text-base text-gray-900 bg-gray-200 border border-l-0 border-gray-300 rounded-r-md">年</span>
+        <span class="text-gray-500 text-sm pt-4 pl-4">1年未満の端数は切り上げ</span>
       </div>
-    </Form>
-  </CardBody>
-</Card>
+      <p class="block mx-3 mt-3 mb-2 text-base font-medium text-gray-900">退職基因</p>
+      <div class="flex items-center ml-4">
+        <input type="checkbox" name="isDisability" id="isDisability" bind:checked="{isDisability}"
+               class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300" />
+        <label for="isDisability"
+               class="ml-2 text-base font-normal text-gray-900">障害者となったことに直接基因して退職した</label>
+      </div>
+      <p class="block mx-3 mt-3 mb-2 text-base font-medium text-gray-900">役員等以外か役員等か</p>
+      <div class="flex ml-4">
+        <div class="flex items-center mr-4">
+          <input type="radio" name="isOfficer" id="isOfficer-0" value="0" bind:group="{isOfficer}"
+                 class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 " />
+          <label for="isOfficer-0" class="ml-2 text-base font-normal text-gray-900">役員等以外</label>
+        </div>
+        <div class="flex items-center mr-4">
+          <input type="radio" name="isOfficer" id="isOfficer-1" value="1" bind:group="{isOfficer}"
+                 class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 " />
+          <label for="isOfficer-1" class="ml-2 text-base font-normal text-gray-900">役員等</label>
+        </div>
+      </div>
+      <label for="severancePay" class="block mx-3 mt-3 mb-2 text-base font-medium text-gray-900">退職金</label>
+      <div class="inline-flex ml-4">
+        <input type="number" name="severancePay" id="severancePay" bind:value="{severancePay}"
+               class="rounded-none rounded-l-lg border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 w-36 text-base border-gray-300 p-2.5" />
+        <span
+          class="inline-flex items-center px-2.5 text-base text-gray-900 bg-gray-200 border border-l-0 border-gray-300 rounded-r-md">円</span>
+      </div>
+      <div class="grid justify-end m-3">
+        <button type="submit"
+                class="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2.5 mr-2 mb-2">
+          所得税を計算する
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

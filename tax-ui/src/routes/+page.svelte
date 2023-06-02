@@ -17,4 +17,4 @@
   let tax: number | null = null;
 </script>
 
-<Presentation {...formInputs} bind:tax="{tax}" on:submit={handleInputFormSubmit} />
+<Presentation {...formInputs} bind:tax="{tax}" on:submit|preventDefault={handleInputFormSubmit} />
