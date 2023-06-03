@@ -7,7 +7,12 @@
     severancePay: number;
   };
 
-  export let { yearsOfService, isDisability, isOfficer = "0", severancePay }: InputForm = {};
+  export let { yearsOfService, isDisability, isOfficer, severancePay }: InputForm = {
+    yearsOfService: 10,
+    isDisability: false,
+    isOfficer: "0",
+    severancePay: 5_000_000
+  };
 </script>
 <div class="border-2 rounded-xl w-96 h-[450px]">
   <div class="border-b-2 bg-gray-100 leading-10 text-lg text-center">退職金情報を入力してください</div>
