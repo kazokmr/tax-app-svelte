@@ -8,6 +8,7 @@
   export let { formInputs }: PresentationProps = {};
   export let { tax }: PresentationProps = { tax: null };
 </script>
+
 <div class="container w-[870px]">
   <h2 class="text-center text-2xl font-semibold">退職金の所得税計算アプリケーション</h2>
   <div class="columns-2">

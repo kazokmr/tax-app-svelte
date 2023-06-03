@@ -5,7 +5,6 @@ import userEvent from "@testing-library/user-event";
 import { render, screen, waitFor } from "@testing-library/svelte";
 import Page from "./+page.svelte";
 
-
 const server = setupServer(
   rest.post("http://localhost:3000/calc-tax", (req, res, context) =>
     res(context.status(200), context.json({ tax: 10000 }))

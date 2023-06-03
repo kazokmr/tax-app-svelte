@@ -3,13 +3,6 @@
   import type { CalcTaxParam, CalcTaxResult } from "$lib/fetch/client/calcTax";
   import { calcTax } from "$lib/fetch/client/calcTax";
 
-  // const formInputs = {
-  //   yearsOfService: 10,
-  //   isDisability: false,
-  //   isOfficer: "0",
-  //   severancePay: 5_000_000
-  // } satisfies InputForm;
-
   let tax: number | null = null;
 
   const handleInputFormSubmit = async (event) => {
@@ -19,13 +12,13 @@
       isDisability: !!formData.get("isDisability"),
       isOfficer: !!Number(formData.get("isOfficer")),
       severancePay: Number(formData.get("severancePay"))
-    }satisfies CalcTaxParam;
+    } satisfies CalcTaxParam;
     const response = await calcTax(param);
     if (response.ok) {
-      const json = await response.json() satisfies CalcTaxResult;
+      const json = (await response.json()) satisfies CalcTaxResult;
       tax = json.tax;
     }
   };
 </script>
 
-<Presentation tax="{tax}" on:submit={handleInputFormSubmit} />
+<Presentation tax="{tax}" on:submit="{handleInputFormSubmit}" />
