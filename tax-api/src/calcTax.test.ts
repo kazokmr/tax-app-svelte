@@ -98,7 +98,7 @@ describe("退職所得控除額", () => {
           }
         );
       });
-      describe("障害者になったことが直接の原因ではない場合は100万円を加える", () => {
+      describe("障害者になったことが直接の原因の場合は100万円を加える", () => {
         test.each`
           yearsOfService | isDisability | expected
           ${21}          | ${true}      | ${9_700_000}
