@@ -32,7 +32,7 @@ export const calcTaxableRetirementIncome = ({
   severancePay,
   retirementIncomeDeduction
 }: CalcTaxableRetirementIncome) => {
-  let paidAfterDeduction = severancePay - retirementIncomeDeduction;
+  const paidAfterDeduction = severancePay - retirementIncomeDeduction;
 
   const income = () => {
     if (paidAfterDeduction < 0) {
