@@ -10,9 +10,11 @@ type Story = StoryObj<typeof meta>;
 
 export const Standard: Story = {
   args: {
-    yearsOfService: 10,
-    isDisability: false,
-    isOfficer: "0",
-    severancePay: 5_000_000
+    data: {
+      yearsOfService: 10,
+      isDisability: false,
+      isOfficer: "0",
+      severancePay: 5_000_000
+    }
   }
 };

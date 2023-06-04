@@ -1,8 +1,5 @@
 <script lang="ts">
-  export type ResultProps = {
-    tax: number | null;
-  };
-  export let { tax }: ResultProps = { tax: null };
+  export let tax;
   $: taxStr = tax === null ? "---" : new Intl.NumberFormat("ja-JP").format(tax);
 </script>
 

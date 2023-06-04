@@ -1,7 +1,10 @@
 <script lang="ts">
-  import Presentation from "$lib/components/Presentation.svelte";
+  import type { PageData } from "./$types";
   import type { CalcTaxParam, CalcTaxResult } from "$lib/fetch/client/calcTax";
   import { calcTax } from "$lib/fetch/client/calcTax";
+  import Presentation from "$lib/components/Presentation.svelte";
+
+  export let data: PageData;
 
   let tax: number | null = null;
 
@@ -21,4 +24,4 @@
   };
 </script>
 
-<Presentation tax="{tax}" on:submit="{handleInputFormSubmit}" />
+<Presentation data="{data.form}" tax="{tax}" on:submit="{handleInputFormSubmit}" />

@@ -1,17 +1,10 @@
 <script lang="ts">
-  export type InputForm = {
-    yearsOfService: number;
-    isDisability: boolean;
-    isOfficer: string;
-    severancePay: number;
-  };
+  import type { Validation } from "sveltekit-superforms";
+  import type { InputSchema } from "$lib/schemas/inputSchema";
+  import { superForm } from "sveltekit-superforms/client";
 
-  export let { yearsOfService, isDisability, isOfficer, severancePay }: InputForm = {
-    yearsOfService: 10,
-    isDisability: false,
-    isOfficer: "0",
-    severancePay: 5_000_000
-  };
+  export let data: Validation<InputSchema>;
+  const { form } = superForm(data);
 </script>
 
 <div class="border-2 rounded-xl w-96 h-[450px]">
@@ -28,7 +21,7 @@
           type="number"
           name="yearsOfService"
           id="yearsOfService"
-          bind:value="{yearsOfService}"
+          bind:value="{$form.yearsOfService}"
           class="rounded-none rounded-l-lg border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 w-24 text-base border-gray-300 p-2.5"
         />
         <span
@@ -44,7 +37,7 @@
           type="checkbox"
           name="isDisability"
           id="isDisability"
-          bind:checked="{isDisability}"
+          bind:checked="{$form.isDisability}"
           class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300"
         />
         <label for="isDisability" class="ml-2 text-base font-normal text-gray-900">
@@ -59,7 +52,7 @@
             name="isOfficer"
             id="isOfficer-0"
             value="0"
-            bind:group="{isOfficer}"
+            bind:group="{$form.isOfficer}"
             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
           />
           <label for="isOfficer-0" class="ml-2 text-base font-normal text-gray-900">
@@ -72,7 +65,7 @@
             name="isOfficer"
             id="isOfficer-1"
             value="1"
-            bind:group="{isOfficer}"
+            bind:group="{$form.isOfficer}"
             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
           />
           <label for="isOfficer-1" class="ml-2 text-base font-normal text-gray-900">役員等</label>
@@ -86,7 +79,7 @@
           type="number"
           name="severancePay"
           id="severancePay"
-          bind:value="{severancePay}"
+          bind:value="{$form.severancePay}"
           class=" rounded-none rounded-l-lg border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 w-36 text-base border-gray-300 p-2.5"
         />
         <span
