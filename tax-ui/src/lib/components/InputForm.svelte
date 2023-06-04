@@ -1,18 +1,23 @@
 <script lang="ts">
   import type { Validation } from "sveltekit-superforms";
   import type { InputSchema } from "$lib/schemas/inputSchema";
+  import { inputSchema } from "$lib/schemas/inputSchema";
   import { superForm } from "sveltekit-superforms/client";
 
   export let data: Validation<InputSchema>;
-  const { form } = superForm(data);
+  const { form, errors, constraints, enhance } = superForm(data, {
+    validators: inputSchema,
+    validationMethod: "auto",
+    defaultValidator: "keep"
+  });
 </script>
 
-<div class="border-2 rounded-xl w-96 h-[450px]">
+<div class="border-2 rounded-xl w-96 h-[600px]">
   <div class="border-b-2 bg-gray-100 leading-10 text-lg text-center">
     退職金情報を入力してください
   </div>
   <div>
-    <form method="post" on:submit|preventDefault>
+    <form method="post" on:submit|preventDefault use:enhance>
       <label for="yearsOfService" class="block mx-3 mt-3 mb-2 text-base font-medium text-gray-900">
         勤続年数
       </label>
@@ -21,8 +26,10 @@
           type="number"
           name="yearsOfService"
           id="yearsOfService"
-          bind:value="{$form.yearsOfService}"
           class="rounded-none rounded-l-lg border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 w-24 text-base border-gray-300 p-2.5"
+          data-invalid="{$errors.yearsOfService}"
+          bind:value="{$form.yearsOfService}"
+          {...$constraints.yearsOfService}
         />
         <span
           class="inline-flex items-center px-2.5 text-base text-gray-900 bg-gray-200 border border-l-0 border-gray-300 rounded-r-md"
@@ -31,14 +38,17 @@
         </span>
         <span class="text-gray-500 text-sm pt-4 pl-4">1年未満の端数は切り上げ</span>
       </div>
+      {#if $errors.yearsOfService}
+        <div class="text-red-500 ml-4">{$errors.yearsOfService}</div>
+      {/if}
       <p class="block mx-3 mt-3 mb-2 text-base font-medium text-gray-900">退職基因</p>
       <div class="flex items-center ml-4">
         <input
           type="checkbox"
           name="isDisability"
           id="isDisability"
-          bind:checked="{$form.isDisability}"
           class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300"
+          bind:checked="{$form.isDisability}"
         />
         <label for="isDisability" class="ml-2 text-base font-normal text-gray-900">
           障害者となったことに直接基因して退職した
@@ -52,8 +62,8 @@
             name="isOfficer"
             id="isOfficer-0"
             value="0"
-            bind:group="{$form.isOfficer}"
             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
+            bind:group="{$form.isOfficer}"
           />
           <label for="isOfficer-0" class="ml-2 text-base font-normal text-gray-900">
             役員等以外
@@ -65,8 +75,8 @@
             name="isOfficer"
             id="isOfficer-1"
             value="1"
-            bind:group="{$form.isOfficer}"
             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
+            bind:group="{$form.isOfficer}"
           />
           <label for="isOfficer-1" class="ml-2 text-base font-normal text-gray-900">役員等</label>
         </div>
@@ -79,8 +89,10 @@
           type="number"
           name="severancePay"
           id="severancePay"
-          bind:value="{$form.severancePay}"
           class=" rounded-none rounded-l-lg border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 w-36 text-base border-gray-300 p-2.5"
+          data-invalid="{$errors.severancePay}"
+          bind:value="{$form.severancePay}"
+          {...$constraints.severancePay}
         />
         <span
           class="inline-flex items-center px-2.5 text-base text-gray-900 bg-gray-200 border border-l-0 border-gray-300 rounded-r-md"
@@ -88,6 +100,9 @@
           円
         </span>
       </div>
+      {#if $errors.severancePay}
+        <div class="text-red-500 ml-4">{$errors.severancePay}</div>
+      {/if}
       <div class="m-3">
         <button
           type="submit"
