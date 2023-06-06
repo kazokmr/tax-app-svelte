@@ -11,13 +11,11 @@ export const inputSchema = z
       .gte(1, { message: "１以上を入力してください" })
       .lte(100)
       .default(10),
-    isDisability: z
-      .boolean()
-      .default(false),
+    isDisability: z.boolean().default(false),
     isOfficer: z
       .string()
-      .transform((val) => !!Number(val))
-      .default("0"),
+      .default("false")
+      .transform((val) => val === "true"),
     severancePay: z
       .number({
         required_error: "退職金を入力してください",
