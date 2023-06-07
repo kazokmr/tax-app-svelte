@@ -3,15 +3,29 @@
   import type { InputSchema } from "$lib/schemas/inputSchema";
   import { inputSchema } from "$lib/schemas/inputSchema";
   import { superForm } from "sveltekit-superforms/client";
+  import { createEventDispatcher } from "svelte";
 
   export let data: SuperValidated<InputSchema>;
+  const dispatch = createEventDispatcher();
   const { form, errors, enhance } = superForm(data, {
     validators: inputSchema,
     validationMethod: "auto",
     defaultValidator: "keep",
     onResult: ({ result }) => {
-      // isOfficerを boolean型 から string型に変換する
+      // サーバーから受け取ったResultForm の isOfficer は boolean なので string に変換する
       result.data.form.data.isOfficer = result.data.form.data.isOfficer ? "1" : "0";
+    },
+    onUpdate: ({ form }) => {
+      // サーバでの検証結果に合わせて 計算結果を更新する
+      if (form.valid) {
+        dispatch("calculate", { tax: form.message });
+      } else {
+        dispatch("calculate", { tax: undefined });
+      }
+    },
+    onError: () => {
+      // エラーの場合は計算結果をクリアする
+      dispatch("calculate", { tax: undefined });
     }
   });
 </script>

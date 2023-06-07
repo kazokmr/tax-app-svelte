@@ -1,10 +1,10 @@
 <script lang="ts">
   import type { PageData } from "./$types";
   import Presentation from "$lib/components/Presentation.svelte";
-  import { superForm } from "sveltekit-superforms/client";
 
   export let data: PageData;
-  const { message: tax } = superForm(data.form);
+  let tax;
+  const handleResult = (event) => (tax = event.detail.tax);
 </script>
 
-<Presentation data="{data.form}" tax="{$tax}" />
+<Presentation data="{data.form}" tax="{tax}" on:calculate="{handleResult}" />

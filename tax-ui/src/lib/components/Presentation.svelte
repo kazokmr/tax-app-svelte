@@ -12,7 +12,7 @@
   <h2 class="text-center text-2xl font-semibold">退職金の所得税計算アプリケーション</h2>
   <div class="columns-2">
     <div class="">
-      <InputForm data="{data}" />
+      <InputForm data="{data}" on:calculate />
     </div>
     <div>
       <Result tax="{tax}" />
