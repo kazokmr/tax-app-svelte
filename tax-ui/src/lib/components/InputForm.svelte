@@ -8,7 +8,11 @@
   const { form, errors, enhance } = superForm(data, {
     validators: inputSchema,
     validationMethod: "auto",
-    defaultValidator: "keep"
+    defaultValidator: "keep",
+    onResult: ({ result }) => {
+      // isOfficerを boolean型 から string型に変換する
+      result.data.form.data.isOfficer = result.data.form.data.isOfficer ? "1" : "0";
+    }
   });
 </script>
 
@@ -27,7 +31,8 @@
           name="yearsOfService"
           id="yearsOfService"
           class="rounded-none rounded-l-lg border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 w-24 text-base border-gray-300 p-2.5"
-          data-invalid="{$errors.yearsOfService}"
+          aria-required="true"
+          aria-invalid="{$errors.yearsOfService ? 'true' : undefined}"
           bind:value="{$form.yearsOfService}"
         />
         <span
@@ -47,6 +52,7 @@
             type="checkbox"
             name="isDisability"
             class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300"
+            aria-required="true"
             bind:checked="{$form.isDisability}"
           />
           障害者となったことに直接基因して退職した
@@ -59,7 +65,7 @@
             <input
               type="radio"
               name="isOfficer"
-              value="false"
+              value="0"
               class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
               bind:group="{$form.isOfficer}"
             />
@@ -71,7 +77,7 @@
             <input
               type="radio"
               name="isOfficer"
-              value="true"
+              value="1"
               class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
               bind:group="{$form.isOfficer}"
             />
@@ -88,7 +94,8 @@
           name="severancePay"
           id="severancePay"
           class=" rounded-none rounded-l-lg border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 w-36 text-base border-gray-300 p-2.5"
-          data-invalid="{$errors.severancePay}"
+          aria-required="true"
+          aria-invalid="{$errors.severancePay ? 'true' : undefined}"
           bind:value="{$form.severancePay}"
         />
         <span
