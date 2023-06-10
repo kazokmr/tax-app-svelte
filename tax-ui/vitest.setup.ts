@@ -17,12 +17,9 @@ vi.mock("$app/environment", (): typeof environment => ({
 }));
 
 vi.mock("$app/navigation", (): typeof navigation => ({
-  afterNavigate: () => {
-  },
-  beforeNavigate: () => {
-  },
-  disableScrollHandling: () => {
-  },
+  afterNavigate: () => {},
+  beforeNavigate: () => {},
+  disableScrollHandling: () => {},
   goto: () => Promise.resolve(),
   invalidate: () => Promise.resolve(),
   invalidateAll: () => Promise.resolve(),

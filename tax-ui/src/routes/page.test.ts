@@ -6,11 +6,13 @@ import Page from "./+page.svelte";
 import { superValidate } from "sveltekit-superforms/server";
 import { inputSchema } from "$lib/schemas/inputSchema";
 
-const server = setupServer(
-  rest.post("http://localhost:3000/calc-tax", (req, res, context) =>
-    res(context.status(200), context.json({ tax: 10000 }))
+const handlers = [
+  rest.post("http://localhost:3000/*", (req, res, context) =>
+    res(context.status(200), context.json({ message: 10000 }))
   )
-);
+];
+
+const server = setupServer(...handlers);
 
 beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
@@ -35,7 +37,7 @@ describe("ページコンポーネント", () => {
     expect(screen.getByRole("spinbutton", { name: "退職金" })).toHaveValue(5_000_000);
     expect(screen.getByLabelText("tax").textContent).toBe("--- 円");
   });
-  test.skip("所得税を計算できる", async () => {
+  test("所得税を計算できる", async () => {
     // Begin
     const user = userEvent.setup();
     const form = await superValidate(inputSchema);
