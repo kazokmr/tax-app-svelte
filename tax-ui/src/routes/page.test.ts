@@ -1,24 +1,24 @@
 import { setupServer } from "msw/node";
 import { rest } from "msw";
 import userEvent from "@testing-library/user-event";
-import { render, screen, waitFor } from "@testing-library/svelte";
+import { render, screen } from "@testing-library/svelte";
 import Page from "./+page.svelte";
 import { superValidate } from "sveltekit-superforms/server";
 import { inputSchema } from "$lib/schemas/inputSchema";
 
-const handlers = [
-  rest.post("http://localhost:3000/*", (req, res, context) =>
-    res(context.status(200), context.json({ message: 10000 }))
-  )
-];
+// const handlers = [
+//   rest.post("http://localhost:3000/calc-tax", (req, res, context) =>
+//     res(context.status(200), context.json({ message: 10000 }))
+//   )
+// ];
+//
+// const server = setupServer(...handlers);
+//
+// beforeAll(() => server.listen());
+// afterEach(() => server.resetHandlers());
+// afterAll(() => server.close());
 
-const server = setupServer(...handlers);
-
-beforeAll(() => server.listen());
-afterEach(() => server.resetHandlers());
-afterAll(() => server.close());
-
-describe("ページコンポーネント", () => {
+describe("ページコンポーネント", async () => {
   test("初期表示の確認", async () => {
     // Begin
     // SuperValidateオブジェクトを
@@ -50,7 +50,7 @@ describe("ページコンポーネント", () => {
 
     // Then
     // FIXME $app/form モジュールを Mock化できないとアクションが実行できない。 E2Eテストで代用する予定
-    await waitFor(() => expect(screen.getByLabelText("tax").textContent).toBe("10,000 円"));
+    expect((await screen.findByLabelText("tax")).textContent).toBe("10,000 円");
   });
   test("勤続年数を入力できる", async () => {
     // Begin
@@ -64,9 +64,7 @@ describe("ページコンポーネント", () => {
     await user.keyboard("20");
 
     // Then
-    await waitFor(() =>
-      expect(screen.getByRole("spinbutton", { name: "勤続年数" })).toHaveValue(20)
-    );
+    expect((await screen.findByRole("spinbutton", { name: "勤続年数" }))).toHaveValue(20);
   });
   test("退職基因チェックボックスを選択できる", async () => {
     // Begin
@@ -78,7 +76,7 @@ describe("ページコンポーネント", () => {
     await user.click(screen.getByRole("checkbox", { name: /障害者/i }));
 
     // Then
-    await waitFor(() => expect(screen.getByRole("checkbox", { name: /障害者/i })).toBeChecked());
+    expect(await screen.getByRole("checkbox", { name: /障害者/i })).toBeChecked();
   });
   test("退職基因チェックボックスを未選択にできる", async () => {
     // Begin
@@ -91,9 +89,7 @@ describe("ページコンポーネント", () => {
     await user.click(screen.getByRole("checkbox", { name: /障害者/i }));
 
     // Then
-    await waitFor(() =>
-      expect(screen.getByRole("checkbox", { name: /障害者/i })).not.toBeChecked()
-    );
+    expect(await screen.getByRole("checkbox", { name: /障害者/i })).not.toBeChecked();
   });
   test("役員等を選択できる", async () => {
     // Begin
@@ -106,12 +102,8 @@ describe("ページコンポーネント", () => {
     await user.click(screen.getByRole("radio", { name: "役員等" }));
 
     // Then
-    await waitFor(() => {
-      expect(screen.getByRole("radio", { name: "役員等" })).toBeChecked();
-    });
-    await waitFor(() => {
-      expect(screen.getByRole("radio", { name: "役員等以外" })).not.toBeChecked();
-    });
+    expect(await screen.getByRole("radio", { name: "役員等" })).toBeChecked();
+    expect(await screen.getByRole("radio", { name: "役員等以外" })).not.toBeChecked();
   });
   test("役員等以外を選択できる", async () => {
     // Begin
@@ -124,12 +116,8 @@ describe("ページコンポーネント", () => {
     await user.click(screen.getByRole("radio", { name: "役員等以外" }));
 
     // Then
-    await waitFor(() => {
-      expect(screen.getByRole("radio", { name: "役員等" })).not.toBeChecked();
-    });
-    await waitFor(() => {
-      expect(screen.getByRole("radio", { name: "役員等以外" })).toBeChecked();
-    });
+    expect(await screen.getByRole("radio", { name: "役員等" })).not.toBeChecked();
+    expect(await screen.getByRole("radio", { name: "役員等以外" })).toBeChecked();
   });
   test("退職金を入力できる", async () => {
     // Begin
@@ -143,8 +131,7 @@ describe("ページコンポーネント", () => {
     await user.keyboard("1234567");
 
     // Then
-    await waitFor(() =>
-      expect(screen.getByRole("spinbutton", { name: "退職金" })).toHaveValue(1234567)
-    );
+    expect(await screen.findByRole("spinbutton", { name: "退職金" })).toHaveValue(1234567);
   });
-});
+})
+;
