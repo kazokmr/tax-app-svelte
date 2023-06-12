@@ -14,14 +14,8 @@
     onResult: ({ result }) => {
       // サーバーから受け取ったResultForm の isOfficer は boolean なので string に変換する
       result.data.form.data.isOfficer = result.data.form.data.isOfficer ? "1" : "0";
-    },
-    onUpdate: ({ form }) => {
-      // サーバでの検証結果に合わせて 計算結果を更新する
-      if (form.valid) {
-        dispatch("calculate", { tax: form.message });
-      } else {
-        dispatch("calculate", { tax: undefined });
-      }
+      // 計算結果を反映する (onUpdateだとform.messageにセットするのでここで行う)
+      dispatch("calculate", { tax: result.data.tax });
     },
     onError: () => {
       // エラーの場合は計算結果をクリアする
