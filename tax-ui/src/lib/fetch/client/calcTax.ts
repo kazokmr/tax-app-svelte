@@ -15,5 +15,8 @@ export const calcTax = async (param: CalcTaxParam) =>
     headers: {
       "Content-type": "application/json"
     },
-    body: JSON.stringify(param)
+    body: JSON.stringify({
+      ...param,
+      isOfficer: !!Number(param.isOfficer)
+    })
   });

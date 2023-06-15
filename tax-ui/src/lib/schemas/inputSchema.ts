@@ -16,8 +16,7 @@ export const inputSchema = z
     isDisability: z.boolean().default(false),
     isOfficer: z
       .string()
-      .default("0")
-      .transform((val) => !!Number(val)),
+      .default("0"),
     severancePay: z
       .number({
         required_error: "退職金を入力してください",
