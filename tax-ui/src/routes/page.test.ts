@@ -3,6 +3,16 @@ import { render, screen, waitFor } from "@testing-library/svelte";
 import Page from "./+page.svelte";
 import { superValidate } from "sveltekit-superforms/server";
 import { inputSchema } from "$lib/schemas/inputSchema";
+import { setupServer } from "msw/node";
+import { afterAll, afterEach, beforeAll } from "vitest";
+import { rest } from "msw";
+import * as devalue from "devalue";
+
+const server = setupServer();
+
+beforeAll(() => server.listen());
+afterEach(() => server.resetHandlers());
+afterAll(() => server.close());
 
 describe("ページコンポーネント", async () => {
   test("初期表示の確認", async () => {
@@ -24,6 +34,15 @@ describe("ページコンポーネント", async () => {
   });
   test("所得税を計算できる", async () => {
     // Begin
+    server.use(
+      rest.post("http://localhost:3000/*", (req, res, context) =>
+        res(context.json({
+          type: "success",
+          status: 200,
+          data: devalue.stringify({ form, tax: 10000 })
+        }))
+      )
+    );
     const form = await superValidate(inputSchema);
     render(Page, { data: { form } });
 
@@ -38,7 +57,6 @@ describe("ページコンポーネント", async () => {
     await user.click(screen.getByRole("button", { name: "所得税を計算する" }));
 
     // Then
-    // FIXME $app/form モジュールを Mock化できないとアクションが実行できない。 E2Eテストで代用する予定
     await waitFor(() => {
       expect(screen.getByLabelText("tax")).toHaveTextContent("10,000 円");
     });
@@ -55,7 +73,7 @@ describe("ページコンポーネント", async () => {
     await user.keyboard("20");
 
     // Then
-    expect((await screen.findByRole("spinbutton", { name: "勤続年数" }))).toHaveValue(20);
+    expect(await screen.findByRole("spinbutton", { name: "勤続年数" })).toHaveValue(20);
   });
   test("退職基因チェックボックスを選択できる", async () => {
     // Begin
@@ -124,5 +142,4 @@ describe("ページコンポーネント", async () => {
     // Then
     expect(await screen.findByRole("spinbutton", { name: "退職金" })).toHaveValue(1234567);
   });
-})
-;
+});
