@@ -12,7 +12,8 @@ module.exports = {
   parserOptions: {
     sourceType: "module",
     ecmaVersion: 2020,
-    extraFileExtensions: [".svelte"]
+    extraFileExtensions: [".svelte"],
+    warnOnUnsupportedTypeScriptVersion: false
   },
   env: {
     browser: true,

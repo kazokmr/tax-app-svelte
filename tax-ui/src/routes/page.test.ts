@@ -36,11 +36,13 @@ describe("ページコンポーネント", async () => {
     // Begin
     server.use(
       rest.post("http://localhost:3000/*", (req, res, context) =>
-        res(context.json({
-          type: "success",
-          status: 200,
-          data: devalue.stringify({ form, tax: 10000 })
-        }))
+        res(
+          context.json({
+            type: "success",
+            status: 200,
+            data: devalue.stringify({ form, tax: 10000 })
+          })
+        )
       )
     );
     const form = await superValidate(inputSchema);
