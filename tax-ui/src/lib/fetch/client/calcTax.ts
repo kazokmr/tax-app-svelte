@@ -1,7 +1,7 @@
 export type CalcTaxParam = {
   yearsOfService: number;
   isDisability: boolean;
-  isOfficer: boolean;
+  isOfficer: string;
   severancePay: number;
 };
 
