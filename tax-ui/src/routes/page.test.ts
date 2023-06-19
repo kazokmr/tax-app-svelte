@@ -166,10 +166,38 @@ describe("勤続年数のバリデーション", () => {
     await user.click(screen.getByRole("spinbutton", { name: "勤続年数" }));
     await user.clear(screen.getByRole("spinbutton", { name: "勤続年数" }));
     await user.keyboard(yearsOfServiceValue);
-    await user.click(screen.getByRole("checkbox", { name: /障害者/i }));
+    // focusを移動する(onBlur)
+    await user.tab();
 
     // Then
     expect(await screen.findByText(errorMessage)).toBeInTheDocument();
-    expect(screen.getByLabelText("tax").textContent).toBe("--- 円");
+    expect(screen.getByLabelText("tax")).toHaveTextContent("--- 円");
+  });
+});
+
+describe("退職金のバリデーション", () => {
+  test.each`
+    severancePayValue  | errorMessage
+    ${"-1"}            | ${"１円以上を入力してください"}
+    ${"1000000000001"} | ${"1,000,000,000,000円までです"}
+    ${"8000000.1"}     | ${"１円以上を入力してください"}
+  `("退職金$severancePayValue", async ({ severancePayValue, errorMessage }) => {
+    // Begin
+    const form = await superValidate(inputSchema);
+    render(Page, { data: { form } });
+
+    expect(screen.queryByText(errorMessage)).not.toBeInTheDocument();
+
+    // When
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("spinbutton", { name: "退職金" }));
+    await user.clear(screen.getByRole("spinbutton", { name: "退職金" }));
+    await user.keyboard(severancePayValue);
+
+    await user.tab();
+
+    // Then
+    expect(await screen.findByText(errorMessage)).toBeInTheDocument();
+    expect(screen.getByLabelText("tax")).toHaveTextContent("--- 円");
   });
 });
