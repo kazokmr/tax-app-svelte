@@ -4,7 +4,7 @@ import Page from "./+page.svelte";
 import { superValidate } from "sveltekit-superforms/server";
 import { inputSchema } from "$lib/schemas/inputSchema";
 import { setupServer } from "msw/node";
-import { afterAll, afterEach, beforeAll } from "vitest";
+import { afterAll, afterEach, beforeAll, describe, expect } from "vitest";
 import { rest } from "msw";
 import * as devalue from "devalue";
 
@@ -143,5 +143,33 @@ describe("ページコンポーネント", async () => {
 
     // Then
     expect(await screen.findByRole("spinbutton", { name: "退職金" })).toHaveValue(1234567);
+  });
+});
+
+describe("勤続年数のバリデーション", () => {
+  test.each`
+    yearsOfServiceValue | errorMessage
+    ${"-1"}             | ${"１以上の整数を入力してください"}
+    ${"0"}              | ${"１以上の整数を入力してください"}
+    ${"101"}            | ${"１００以下の整数を入力してください"}
+    ${"10.5"}           | ${"整数を入力してください"}
+  `("勤続年数$yearsOfServiceValue", async ({ yearsOfServiceValue, errorMessage }) => {
+    // Begin
+    const form = await superValidate(inputSchema);
+    render(Page, { data: { form } });
+
+    // 事前確認
+    expect(screen.queryByText(errorMessage)).not.toBeInTheDocument();
+
+    // When
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("spinbutton", { name: "勤続年数" }));
+    await user.clear(screen.getByRole("spinbutton", { name: "勤続年数" }));
+    await user.keyboard(yearsOfServiceValue);
+    await user.click(screen.getByRole("checkbox", { name: /障害者/i }));
+
+    // Then
+    expect(await screen.findByText(errorMessage)).toBeInTheDocument();
+    expect(screen.getByLabelText("tax").textContent).toBe("--- 円");
   });
 });

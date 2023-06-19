@@ -9,7 +9,7 @@ export const inputSchema = z
       })
       .int({ message: "整数を入力してください" })
       .gte(1, { message: "１以上の整数を入力してください" })
-      .lte(100)
+      .lte(100, { message: "１００以下の整数を入力してください" })
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       .default("" as number),
