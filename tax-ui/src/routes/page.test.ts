@@ -149,6 +149,7 @@ describe("ページコンポーネント", async () => {
 describe("勤続年数のバリデーション", () => {
   test.each`
     yearsOfServiceValue | errorMessage
+    ${""}               | ${"１以上の整数を入力してください"}
     ${"-1"}             | ${"１以上の整数を入力してください"}
     ${"0"}              | ${"１以上の整数を入力してください"}
     ${"101"}            | ${"１００以下の整数を入力してください"}
@@ -199,5 +200,39 @@ describe("退職金のバリデーション", () => {
     // Then
     expect(await screen.findByText(errorMessage)).toBeInTheDocument();
     expect(screen.getByLabelText("tax")).toHaveTextContent("--- 円");
+  });
+});
+
+describe("勤続年数が入力できる", () => {
+  test.each`
+    yearsOfServiceValue
+    ${"1"}
+    ${"20"}
+    ${"100"}
+  `("勤続年数$yearsOfServiceValue", async ({ yearsOfServiceValue }) => {
+    // Begin
+    const form = await superValidate(inputSchema);
+    render(Page, { data: { form } });
+
+    // 事前確認
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("spinbutton", { name: "勤続年数" }));
+    await user.clear(screen.getByRole("spinbutton", { name: "勤続年数" }));
+
+    // エラーメッセージが出ることを確認する
+    await user.tab();
+    expect(await screen.findByText("１以上の整数を入力してください")).toBeInTheDocument();
+
+    // When
+    await user.click(screen.getByRole("spinbutton", { name: "勤続年数" }));
+    await user.clear(screen.getByRole("spinbutton", { name: "勤続年数" }));
+    await user.keyboard(yearsOfServiceValue);
+
+    await user.tab();
+
+    // Then
+    await waitFor(() => {
+      expect(screen.queryByText("１円以上を入力してください")).not.toBeInTheDocument();
+    });
   });
 });
