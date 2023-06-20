@@ -218,6 +218,7 @@ describe("勤続年数が入力できる", () => {
     const user = userEvent.setup();
     await user.click(screen.getByRole("spinbutton", { name: "勤続年数" }));
     await user.clear(screen.getByRole("spinbutton", { name: "勤続年数" }));
+    await user.keyboard("-1");
 
     // エラーメッセージが出ることを確認する
     await user.tab();
@@ -231,8 +232,9 @@ describe("勤続年数が入力できる", () => {
     await user.tab();
 
     // Then
+    // メッセージが非表示となること
     await waitFor(() => {
-      expect(screen.queryByText("１円以上を入力してください")).not.toBeInTheDocument();
+      expect(screen.queryByText("１以上の整数を入力してください")).not.toBeInTheDocument();
     });
   });
 });

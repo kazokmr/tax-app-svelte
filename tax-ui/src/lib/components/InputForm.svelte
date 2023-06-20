@@ -7,10 +7,16 @@
 
   export let data: SuperValidated<InputSchema>;
   const dispatch = createEventDispatcher();
-  const { form, errors, enhance } = superForm(data, {
+  const { form, errors, enhance, validate } = superForm(data, {
     validators: inputSchema,
     validationMethod: "auto",
     defaultValidator: "keep",
+    onSubmit: async ({ cancel }) => {
+      const result = await validate();
+      if (!result) {
+        cancel();
+      }
+    },
     onResult: ({ result }) => {
       // 計算結果を反映する (onUpdateだとform.messageにセットするのでここで行う)
       dispatch("calculate", { tax: result.data.tax });
