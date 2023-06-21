@@ -4,8 +4,10 @@
   import { inputSchema } from "$lib/schemas/inputSchema";
   import { superForm } from "sveltekit-superforms/client";
   import { createEventDispatcher } from "svelte";
+  import type { CalcStatus } from "$lib/modules/calcStatus";
 
   export let data: SuperValidated<InputSchema>;
+  export let calcStatus: CalcStatus;
   const dispatch = createEventDispatcher();
   const { form, errors, enhance } = superForm(data, {
     validators: inputSchema,

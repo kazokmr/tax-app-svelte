@@ -3,19 +3,21 @@
   import type { SuperValidated } from "sveltekit-superforms";
   import InputForm from "$lib/components/InputForm.svelte";
   import Result from "$lib/components/Result.svelte";
+  import type { CalcStatus } from "$lib/modules/calcStatus";
 
   export let data: SuperValidated<InputSchema>;
   export let tax: number | undefined;
+  export let calcStatus: CalcStatus;
 </script>
 
 <div class="container w-[870px]">
   <h2 class="text-center text-2xl font-semibold">退職金の所得税計算アプリケーション</h2>
   <div class="columns-2">
     <div class="">
-      <InputForm data="{data}" on:calculate />
+      <InputForm data="{data}" on:calculate calcStatus="{calcStatus}" />
     </div>
     <div>
-      <Result tax="{tax}" />
+      <Result tax="{tax}" calcStatus="{calcStatus}" />
     </div>
   </div>
 </div>

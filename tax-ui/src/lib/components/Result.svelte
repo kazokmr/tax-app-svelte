@@ -1,5 +1,8 @@
 <script lang="ts">
+  import type { CalcStatus } from "$lib/modules/calcStatus";
+
   export let tax: number | undefined;
+  export let calcStatus: CalcStatus;
   $: taxStr = tax == null ? "---" : new Intl.NumberFormat("ja-JP").format(tax);
 </script>
 
