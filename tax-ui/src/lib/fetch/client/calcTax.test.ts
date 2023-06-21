@@ -24,8 +24,8 @@ describe("所得税計算APIをコールする", () => {
     // When
     const response = await calcTax({
       yearsOfService: 6,
-      isOfficer: false,
       isDisability: false,
+      isOfficer: "0",
       severancePay: 3_000_000
     });
 
@@ -45,8 +45,8 @@ describe("所得税計算APIをコールする", () => {
     // When
     const response = await calcTax({
       yearsOfService: 6,
-      isOfficer: false,
       isDisability: false,
+      isOfficer: "0",
       severancePay: 3_000_000
     });
 
@@ -56,3 +56,5 @@ describe("所得税計算APIをコールする", () => {
     expect(await response.json()).toStrictEqual({ message: "Invalid parameter." });
   });
 });
+
+describe("")
