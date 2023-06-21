@@ -275,7 +275,52 @@ describe("勤続年数が入力できる", () => {
     // Then
     // メッセージが非表示となること
     await waitFor(() => {
+      expect(screen.queryByText("勤続年数を入力してください")).not.toBeInTheDocument();
+      expect(
+        screen.queryByText("勤続年数は１以上の整数を入力してください")
+      ).not.toBeInTheDocument();
+      expect(screen.queryByText("整数を入力してください")).not.toBeInTheDocument();
       expect(screen.queryByText("１以上の整数を入力してください")).not.toBeInTheDocument();
+      expect(screen.queryByText("１００以下の整数を入力してください")).not.toBeInTheDocument();
+    });
+  });
+});
+describe("退職金が入力できる", () => {
+  test.each`
+    severancePayValue
+    ${"0"}
+    ${"1"}
+    ${"10000000"}
+    ${"1000000000000"}
+  `("退職金$severancePayValue", async ({ severancePayValue }) => {
+    // Begin
+    const form = await superValidate(inputSchema);
+    render(Page, { data: { form } });
+
+    // 事前確認
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("spinbutton", { name: "退職金" }));
+    await user.clear(screen.getByRole("spinbutton", { name: "退職金" }));
+    await user.keyboard("-1");
+
+    // エラーメッセージが出ることを確認する
+    await user.tab();
+    expect(await screen.findByText("０円以上を入力してください")).toBeInTheDocument();
+
+    // When
+    await user.click(screen.getByRole("spinbutton", { name: "退職金" }));
+    await user.clear(screen.getByRole("spinbutton", { name: "退職金" }));
+    await user.keyboard(severancePayValue);
+
+    await user.tab();
+
+    // Then
+    // メッセージが非表示となること
+    await waitFor(() => {
+      expect(screen.queryByText("退職金を入力してください")).not.toBeInTheDocument();
+      expect(screen.queryByText("１円以上を入力してください")).not.toBeInTheDocument();
+      expect(screen.queryByText("０円以上を入力してください")).not.toBeInTheDocument();
+      expect(screen.queryByText("1,000,000,000,000円までです")).not.toBeInTheDocument();
     });
   });
 });
