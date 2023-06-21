@@ -149,7 +149,6 @@ describe("ページコンポーネント", async () => {
 describe("勤続年数のバリデーション", () => {
   test.each`
     yearsOfServiceValue | errorMessage
-    ${""}               | ${"１以上の整数を入力してください"}
     ${"-1"}             | ${"１以上の整数を入力してください"}
     ${"0"}              | ${"１以上の整数を入力してください"}
     ${"101"}            | ${"１００以下の整数を入力してください"}
@@ -173,6 +172,27 @@ describe("勤続年数のバリデーション", () => {
     // Then
     expect(await screen.findByText(errorMessage)).toBeInTheDocument();
     expect(screen.getByLabelText("tax")).toHaveTextContent("--- 円");
+  });
+  test("未入力の場合", async () => {
+    // Begin
+    const form = await superValidate(inputSchema);
+    form.data.yearsOfService = 10;
+    render(Page, { data: { form } });
+
+    // 事前確認
+    expect(screen.queryByText("勤続年数は１以上の整数を入力してください")).not.toBeInTheDocument();
+
+    // When
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("spinbutton", { name: "勤続年数" }));
+    await user.clear(screen.getByRole("spinbutton", { name: "勤続年数" }));
+
+    // FIXME 初期値を空文字のまま Submit時のValidationを実行させたかったがコンポーネントテストだとStoreが効かないため値を空にしてfocusoutで検証させる
+    // await user.click(screen.getByRole("button", { name: /所得税を/ }));
+    await user.tab();
+
+    // Then
+    await expect(screen.getByText("勤続年数は１以上の整数を入力してください")).toBeInTheDocument();
   });
 });
 
