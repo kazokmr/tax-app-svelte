@@ -18,10 +18,10 @@ export const inputSchema = z
     severancePay: z
       .number({
         required_error: "退職金を入力してください",
-        invalid_type_error: "退職金は１円以上の数値を入力してください"
+        invalid_type_error: "退職金を入力してください"
       })
-      .int({ message: "１円以上を入力してください" })
-      .gte(0, { message: "１円以上を入力してください" })
+      .int({ message: "１円単位で入力してください" })
+      .gte(0, { message: "０円以上を入力してください" })
       .lte(1_000_000_000_000, { message: "1,000,000,000,000円までです" })
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore

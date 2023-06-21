@@ -199,9 +199,9 @@ describe("勤続年数のバリデーション", () => {
 describe("退職金のバリデーション", () => {
   test.each`
     severancePayValue  | errorMessage
-    ${"-1"}            | ${"１円以上を入力してください"}
+    ${"-1"}            | ${"０円以上を入力してください"}
     ${"1000000000001"} | ${"1,000,000,000,000円までです"}
-    ${"8000000.1"}     | ${"１円以上を入力してください"}
+    ${"8000000.1"}     | ${"１円単位で入力してください"}
   `("退職金$severancePayValue", async ({ severancePayValue, errorMessage }) => {
     // Begin
     const form = await superValidate(inputSchema);
@@ -220,6 +220,27 @@ describe("退職金のバリデーション", () => {
     // Then
     expect(await screen.findByText(errorMessage)).toBeInTheDocument();
     expect(screen.getByLabelText("tax")).toHaveTextContent("--- 円");
+  });
+  test("未入力の場合", async () => {
+    // Begin
+    const form = await superValidate(inputSchema);
+    form.data.severancePay = 500000;
+    render(Page, { data: { form } });
+
+    // 事前確認
+    expect(screen.queryByText("退職金を入力してください")).not.toBeInTheDocument();
+
+    // When
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("spinbutton", { name: "退職金" }));
+    await user.clear(screen.getByRole("spinbutton", { name: "退職金" }));
+
+    // FIXME 初期値を空文字のまま Submit時のValidationを実行させたかったがコンポーネントテストだとStoreが効かないため値を空にしてfocusoutで検証させる
+    // await user.click(screen.getByRole("button", { name: /所得税を/ }));
+    await user.tab();
+
+    // Then
+    await expect(screen.getByText("退職金を入力してください")).toBeInTheDocument();
   });
 });
 
