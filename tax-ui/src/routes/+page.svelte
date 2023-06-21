@@ -9,4 +9,9 @@
   let calcStatus: CalcStatus = "succeeded";
 </script>
 
-<Presentation data="{data.form}" tax="{tax}" on:calculate="{handleResult}" calcStatus="{calcStatus}" />
+<Presentation
+  data="{data.form}"
+  tax="{tax}"
+  on:calculate="{handleResult}"
+  calcStatus="{calcStatus}"
+/>
