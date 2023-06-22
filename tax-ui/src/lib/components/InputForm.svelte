@@ -20,7 +20,7 @@
       if (result.type === "success") {
         dispatch("calculate", { tax: result.data.tax });
         dispatch("changeStatus", { calcStatus: "succeeded" });
-      } else if (!result.data.form.valid) {
+      } else if (result.type === "failure" && !result.data?.form.valid) {
         dispatch("changeStatus", { calcStatus: "before-calculation" });
       } else {
         dispatch("changeStatus", { calcStatus: "failed" });

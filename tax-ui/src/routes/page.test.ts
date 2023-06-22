@@ -144,6 +144,33 @@ describe("ページコンポーネント", async () => {
     // Then
     expect(await screen.findByRole("spinbutton", { name: "退職金" })).toHaveValue(1234567);
   });
+  test("所得税計算APIのステータスコードが200-299以外の場合", async () => {
+    // Begin
+    server.use(
+      rest.post("http://localhost:3000/*", (req, res, context) =>
+        res(
+          context.json({
+            type: "error",
+            status: 400,
+            error: devalue.stringify("Invalid parameter.")
+          })
+        )
+      )
+    );
+    const form = await superValidate(inputSchema);
+    form.data.yearsOfService = 20;
+    form.data.severancePay = 5_000_000;
+    render(Page, { data: { form } });
+
+    // When
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("button", { name: /所得税を/i }));
+
+    // Then
+    expect(
+      await screen.findByText("エラーが発生しました。しばらくしてからもう一度お試しください。")
+    ).toBeInTheDocument();
+  });
 });
 
 describe("勤続年数のバリデーション", () => {
