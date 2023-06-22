@@ -8,10 +8,30 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Standard: Story = {
-  args: { tax: 10000 }
+export const BeforeCalculation: Story = {
+  args: {
+    tax: 10000,
+    calcStatus: "before-calculation"
+  }
 };
 
-export const NoResult: Story = {
-  args: { tax: null }
+export const UnderCalculation: Story = {
+  args: {
+    tax: 10000,
+    calcStatus: "under-calculation"
+  }
+};
+
+export const Succeeded: Story = {
+  args: {
+    tax: 10000,
+    calcStatus: "succeeded"
+  }
+};
+
+export const Failed: Story = {
+  args: {
+    tax: 10000,
+    calcStatus: "failed"
+  }
 };
