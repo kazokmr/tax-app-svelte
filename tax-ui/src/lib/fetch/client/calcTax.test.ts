@@ -56,5 +56,3 @@ describe("所得税計算APIをコールする", () => {
     expect(await response.json()).toStrictEqual({ message: "Invalid parameter." });
   });
 });
-
-describe("");

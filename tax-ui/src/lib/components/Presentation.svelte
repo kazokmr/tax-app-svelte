@@ -6,7 +6,7 @@
   import type { CalcStatus } from "$lib/modules/calcStatus";
 
   export let data: SuperValidated<InputSchema>;
-  export let tax: number | undefined;
+  export let tax: number;
   export let calcStatus: CalcStatus;
 </script>
 

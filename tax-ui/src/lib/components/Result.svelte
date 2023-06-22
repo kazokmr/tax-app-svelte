@@ -1,9 +1,9 @@
 <script lang="ts">
   import type { CalcStatus } from "$lib/modules/calcStatus";
 
-  export let tax: number | undefined;
+  export let tax: number;
   export let calcStatus: CalcStatus;
-  $: taxStr = tax == null ? "---" : new Intl.NumberFormat("ja-JP").format(tax);
+  $: taxStr = new Intl.NumberFormat("ja-JP").format(tax);
 </script>
 
 <div class="border-2 rounded-xl w-96 h-[510px]">

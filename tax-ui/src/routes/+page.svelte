@@ -4,7 +4,7 @@
   import Presentation from "$lib/components/Presentation.svelte";
 
   export let data: PageData;
-  let tax;
+  let tax: number;
   let calcStatus: CalcStatus = "before-calculation";
   const handleResult = (event) => (tax = event.detail.tax);
   const handleCalcStatus = (event) => (calcStatus = event.detail.calcStatus);
