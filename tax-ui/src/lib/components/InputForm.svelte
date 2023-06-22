@@ -13,13 +13,21 @@
     validators: inputSchema,
     validationMethod: "auto",
     defaultValidator: "keep",
+    onSubmit: () => {
+      dispatch("changeStatus", { calcStatus: "under-calculation" });
+    },
     onResult: ({ result }) => {
-      // 計算結果を反映する (onUpdateだとform.messageにセットするのでここで行う)
-      dispatch("calculate", { tax: result.data.tax });
+      if (result.type === "success") {
+        dispatch("calculate", { tax: result.data.tax });
+        dispatch("changeStatus", { calcStatus: "succeeded" });
+      } else if (!result.data.form.valid) {
+        dispatch("changeStatus", { calcStatus: "before-calculation" });
+      } else {
+        dispatch("changeStatus", { calcStatus: "failed" });
+      }
     },
     onError: () => {
-      // エラーの場合は計算結果をクリアする
-      dispatch("calculate", { tax: undefined });
+      dispatch("changeStatus", { calcStatus: "failed" });
     }
   });
 </script>
