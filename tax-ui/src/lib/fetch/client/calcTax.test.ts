@@ -57,4 +57,4 @@ describe("所得税計算APIをコールする", () => {
   });
 });
 
-describe("")
+describe("");
