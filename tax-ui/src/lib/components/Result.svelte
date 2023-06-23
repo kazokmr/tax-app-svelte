@@ -6,8 +6,8 @@
   $: taxStr = new Intl.NumberFormat("ja-JP").format(tax);
 </script>
 
-<div class="border-2 rounded-xl w-96 h-[510px]">
-  <div class="border-b-2 bg-gray-100 leading-10 text-lg text-center">退職金にかかる所得税</div>
+<div class="h-[510px] w-96 rounded-xl border-2">
+  <div class="border-b-2 bg-gray-100 text-center text-lg leading-10">退職金にかかる所得税</div>
   <div class="my-12 text-center" aria-label="tax">
     {#if calcStatus === "before-calculation"}
       <span class="text-5xl">---</span>
@@ -17,7 +17,7 @@
         <div role="status">
           <svg
             aria-hidden="true"
-            class="inline w-16 h-16 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+            class="mr-2 inline h-16 w-16 animate-spin fill-blue-600 text-gray-200 dark:text-gray-600"
             viewBox="0 0 100 101"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -37,12 +37,12 @@
       <span>円</span>
     {:else}
       <div
-        class="flex p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800"
+        class="mb-4 flex rounded-lg border border-red-300 bg-red-50 p-4 text-sm text-red-800 dark:border-red-800 dark:bg-gray-800 dark:text-red-400"
         role="alert"
       >
         <svg
           aria-hidden="true"
-          class="flex-shrink-0 inline w-5 h-5 mr-3"
+          class="mr-3 inline h-5 w-5 flex-shrink-0"
           fill="currentColor"
           viewBox="0 0 20 20"
           xmlns="http://www.w3.org/2000/svg"
