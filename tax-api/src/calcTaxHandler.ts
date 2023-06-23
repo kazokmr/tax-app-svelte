@@ -1,5 +1,5 @@
-import { Router } from "express";
 import { calcIncomeTaxForSeverancePay, calcSeverancePayTaxInputScheme } from "./calcTax";
+import { Router } from "express";
 
 const router = Router();
 

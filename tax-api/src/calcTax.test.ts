@@ -1,4 +1,3 @@
-import { describe, expect, test } from "vitest";
 import {
   calcIncomeTaxForSeverancePay,
   calcRetirementIncomeDeduction,
@@ -6,6 +5,7 @@ import {
   calcRetirementTotalTax,
   calcTaxableRetirementIncome
 } from "./calcTax";
+import { describe, expect, test } from "vitest";
 
 describe("退職所得控除額", () => {
   describe("勤続年数が20年以下", () => {
@@ -505,6 +505,7 @@ describe("退職金の所得税額", () => {
     describe("プロパティが未定義の場合", () => {
       test("勤続年数が未定義の場合はエラー", () => {
         expect(() =>
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
           calcIncomeTaxForSeverancePay({
             isDisability: false,
@@ -515,6 +516,7 @@ describe("退職金の所得税額", () => {
       });
       test("障害者となったことに直接起因して退職しかが未定義の場合はエラー", () => {
         expect(() =>
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
           calcIncomeTaxForSeverancePay({
             yearsOfService: 5,
@@ -525,6 +527,7 @@ describe("退職金の所得税額", () => {
       });
       test("役員等かが未定義の場合はエラー", () => {
         expect(() =>
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
           calcIncomeTaxForSeverancePay({
             yearsOfService: 5,
@@ -535,6 +538,7 @@ describe("退職金の所得税額", () => {
       });
       test("退職金が未定義の場合はエラー", () => {
         expect(() =>
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
           calcIncomeTaxForSeverancePay({
             yearsOfService: 5,
@@ -552,20 +556,25 @@ describe("退職金の所得税額", () => {
             isDisability: false,
             isOfficer: false,
             severancePay: 8_000_000,
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             isPaid: true
           })
         ).toThrowError("Invalid argument"));
       test("空オブジェクトの場合はエラー", () =>
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         expect(() => calcIncomeTaxForSeverancePay({})).toThrowError("Invalid argument"));
       test("オブジェクトではない場合はエラー", () =>
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         expect(() => calcIncomeTaxForSeverancePay(8_0000)).toThrowError("Invalid argument"));
       test("undefinedの場合はエラー", () =>
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         expect(() => calcIncomeTaxForSeverancePay(undefined)).toThrowError("Invalid argument"));
       test("nullの場合はエラー", () =>
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         expect(() => calcIncomeTaxForSeverancePay(null)).toThrowError("Invalid argument"));
     });

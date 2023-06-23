@@ -1,6 +1,6 @@
-import { describe, expect, test } from "vitest";
-import request from "supertest";
 import app from "./app";
+import request from "supertest";
+import { describe, expect, test } from "vitest";
 
 describe("POST /calc-tax", () => {
   test("退職金の所得税を計算する", async () => {

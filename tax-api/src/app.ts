@@ -1,6 +1,6 @@
+import calcTaxHandler from "./calcTaxHandler";
 import cors from "cors";
 import express from "express";
-import calcTaxHandler from "./calcTaxHandler";
 
 const app = express();
 
