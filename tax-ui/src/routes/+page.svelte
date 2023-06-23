@@ -1,7 +1,7 @@
 <script lang="ts">
-  import type { PageData } from "./$types";
-  import type { CalcStatus } from "$lib/modules/calcStatus";
   import Presentation from "$lib/components/Presentation.svelte";
+  import type { CalcStatus } from "$lib/modules/calcStatus";
+  import type { PageData } from "./$types";
 
   export let data: PageData;
   let tax: number;

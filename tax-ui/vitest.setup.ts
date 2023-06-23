@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { expect, vi } from "vitest";
+import { readable } from "svelte/store";
+import { Navigation, Page } from "@sveltejs/kit";
 import * as matchers from "@testing-library/jest-dom/matchers";
+import { expect, vi } from "vitest";
 import * as environment from "$app/environment";
 import * as navigation from "$app/navigation";
 import * as stores from "$app/stores";
-import { readable } from "svelte/store";
-import { Navigation, Page } from "@sveltejs/kit";
 
 expect.extend(matchers);
 

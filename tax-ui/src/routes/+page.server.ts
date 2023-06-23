@@ -1,10 +1,10 @@
-import type { Actions, PageServerLoad } from "./$types";
+import { fail } from "@sveltejs/kit";
+import { superValidate } from "sveltekit-superforms/server";
 import type { CalcTaxResult } from "$lib/fetch/client/calcTax";
 import { calcTax } from "$lib/fetch/client/calcTax";
 import type { InputSchema } from "$lib/schemas/inputSchema";
 import { inputSchema } from "$lib/schemas/inputSchema";
-import { superValidate } from "sveltekit-superforms/server";
-import { fail } from "@sveltejs/kit";
+import type { Actions, PageServerLoad } from "./$types";
 
 export const load = (async () => {
   const form = await superValidate(inputSchema);

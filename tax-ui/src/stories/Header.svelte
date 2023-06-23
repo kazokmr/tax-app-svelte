@@ -1,8 +1,7 @@
 <script lang="ts">
-  import "./header.css";
-  import Button from "./Button.svelte";
-
   import { createEventDispatcher } from "svelte";
+  import Button from "./Button.svelte";
+  import "./header.css";
 
   export let user: { name: string } | null = null;
 

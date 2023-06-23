@@ -1,9 +1,9 @@
 <script lang="ts">
-  import type { InputSchema } from "$lib/schemas/inputSchema";
   import type { SuperValidated } from "sveltekit-superforms";
   import InputForm from "$lib/components/InputForm.svelte";
   import Result from "$lib/components/Result.svelte";
   import type { CalcStatus } from "$lib/modules/calcStatus";
+  import type { InputSchema } from "$lib/schemas/inputSchema";
 
   export let data: SuperValidated<InputSchema>;
   export let tax: number;

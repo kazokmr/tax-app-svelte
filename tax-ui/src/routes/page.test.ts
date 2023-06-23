@@ -1,12 +1,12 @@
-import userEvent from "@testing-library/user-event";
 import { render, screen, waitFor } from "@testing-library/svelte";
-import Page from "./+page.svelte";
-import { superValidate } from "sveltekit-superforms/server";
-import { inputSchema } from "$lib/schemas/inputSchema";
-import { setupServer } from "msw/node";
-import { afterAll, afterEach, beforeAll, describe, expect } from "vitest";
-import { rest } from "msw";
+import userEvent from "@testing-library/user-event";
 import * as devalue from "devalue";
+import { rest } from "msw";
+import { setupServer } from "msw/node";
+import { superValidate } from "sveltekit-superforms/server";
+import { afterAll, afterEach, beforeAll, describe, expect } from "vitest";
+import { inputSchema } from "$lib/schemas/inputSchema";
+import Page from "./+page.svelte";
 
 const server = setupServer();
 

@@ -1,7 +1,7 @@
+import { rest } from "msw";
+import { setupServer } from "msw/node";
 import { afterAll, afterEach, beforeAll, describe, expect, test } from "vitest";
 import { calcTax } from "$lib/fetch/client/calcTax";
-import { setupServer } from "msw/node";
-import { rest } from "msw";
 
 // MSWのNodeサーバーのセットアップとクローズ処理
 const server = setupServer();

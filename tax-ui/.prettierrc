@@ -16,5 +16,16 @@
         "parser": "svelte"
       }
     }
-  ]
+  ],
+  "importOrder": [
+    "^(svelte/(.*)$)|^(svelte$)",
+    "^(@sveltejs/(.*)$)|^(@sveltejs/kit$)",
+    "<THIRD_PARTY_MODULES>",
+    "^\\$app/(.*)$",
+    "^\\$env/(.*)$",
+    "^\\$service-worker",
+    "^\\$lib/(.*)$",
+    "^[./]"
+  ],
+  "importOrderSeparation": false
 }
