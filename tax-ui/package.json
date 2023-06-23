@@ -46,7 +46,6 @@
     "eslint-plugin-svelte": "^2.31.0",
     "eslint-plugin-tailwindcss": "^3.12.1",
     "jsdom": "^22.1.0",
-    "json-server": "^0.17.3",
     "msw": "^1.2.2",
     "postcss": "^8.4.24",
     "prettier": "^2.8.8",
