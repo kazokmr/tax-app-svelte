@@ -1,11 +1,32 @@
 import { expect, test } from "@playwright/test";
+import type { IWireMockRequest, IWireMockResponse } from "wiremock-captain";
+import { WireMock } from "wiremock-captain";
 
 test.describe("ページコンポーネントのAction操作", () => {
   test("所得税を計算できる", async ({ page }) => {
     // Begin
-    // await page.route("http://localhost:3000/calc-tax", async route => {
-    //   await route.fulfill({ status: 200, json: { tax: 25_525 } });
-    // });
+    const wiremockEndpoint = "http://localhost:3000";
+    const mock = new WireMock(wiremockEndpoint);
+
+    const request: IWireMockRequest = {
+      method: "POST",
+      endpoint: "/calc-tax",
+      body: {
+        yearsOfService: 10,
+        isDisability: false,
+        isOfficer: false,
+        severancePay: 5000000
+      }
+    };
+
+    const mockedResponse: IWireMockResponse = {
+      status: 200,
+      body: {
+        tax: 25525
+      }
+    };
+    await mock.register(request, mockedResponse);
+
     await page.goto("http://localhost:4173/");
 
     // When
