@@ -23,6 +23,8 @@ export const actions = {
     if (response.ok) {
       const json = (await response.json()) satisfies CalcTaxResult;
       tax = json.tax;
+    } else {
+      return fail(400, { form, tax: 0 });
     }
     return { form, tax };
   }
