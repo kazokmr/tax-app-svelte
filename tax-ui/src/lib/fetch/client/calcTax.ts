@@ -1,3 +1,5 @@
+import { env } from "$env/dynamic/private";
+
 export type CalcTaxParam = {
   yearsOfService: number;
   isDisability: boolean;
@@ -10,7 +12,7 @@ export type CalcTaxResult = {
 };
 
 export const calcTax = async (param: CalcTaxParam) =>
-  await fetch("http://localhost:3000/calc-tax", {
+  await fetch(`http://${env.API_SERVER_HOST}:${env.API_SERVER_PORT}/calc-tax`, {
     method: "POST",
     headers: {
       "Content-type": "application/json"
