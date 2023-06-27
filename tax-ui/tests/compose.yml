@@ -1,0 +1,8 @@
+services:
+  wire-mock:
+    image: wiremock/wiremock
+    container_name: wiremock
+    environment:
+      TZ: Asia/Tokyo
+    ports:
+      - 3000:8080

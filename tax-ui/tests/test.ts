@@ -1,10 +1,19 @@
 import { expect, test } from "@playwright/test";
+import { DockerComposeEnvironment, StartedDockerComposeEnvironment } from "testcontainers";
 import type { IWireMockRequest, IWireMockResponse } from "wiremock-captain";
 import { WireMock } from "wiremock-captain";
 
 test.describe("ページコンポーネントのAction操作", () => {
-  const wiremockEndpoint = "http://localhost:3000";
-  const mock = new WireMock(wiremockEndpoint);
+  let environment: StartedDockerComposeEnvironment;
+  let mock: WireMock;
+  test.beforeAll(async () => {
+    environment = await new DockerComposeEnvironment("./tests", "compose.yml").up();
+    const wiremockEndpoint = "http://localhost:3000";
+    mock = new WireMock(wiremockEndpoint);
+  });
+  test.afterAll(async () => {
+    await environment.down();
+  });
   const request: IWireMockRequest = {
     method: "POST",
     endpoint: "/calc-tax",
