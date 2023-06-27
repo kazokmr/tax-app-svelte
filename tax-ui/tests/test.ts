@@ -14,6 +14,7 @@ test.describe("ページコンポーネントのAction操作", () => {
   test.afterAll(async () => {
     await environment.down();
   });
+
   const request: IWireMockRequest = {
     method: "POST",
     endpoint: "/calc-tax",
@@ -24,6 +25,7 @@ test.describe("ページコンポーネントのAction操作", () => {
       severancePay: 5000000
     }
   };
+
   test("所得税を計算できる", async ({ page }) => {
     // Begin
     const mockedResponse: IWireMockResponse = {

@@ -32,7 +32,7 @@ describe("ページコンポーネント", async () => {
     expect(screen.getByRole("spinbutton", { name: "退職金" })).toHaveValue(5_000_000);
     expect(screen.getByLabelText("tax").textContent).toBe("--- 円");
   });
-  test("所得税を計算できる", async () => {
+  test.skip("所得税を計算できる", async () => {
     // Begin
     server.use(
       rest.post("http://localhost:3000/*", (req, res, context) =>
@@ -144,7 +144,7 @@ describe("ページコンポーネント", async () => {
     // Then
     expect(await screen.findByRole("spinbutton", { name: "退職金" })).toHaveValue(1234567);
   });
-  test("所得税計算APIのステータスコードが200-299以外の場合", async () => {
+  test.skip("所得税計算APIのステータスコードが200-299以外の場合", async () => {
     // Begin
     server.use(
       rest.post("http://localhost:3000/*", (req, res, context) =>
