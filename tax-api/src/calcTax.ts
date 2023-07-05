@@ -7,7 +7,7 @@ type CalcRetirementIncomeDeductionInput = {
 
 export const calcRetirementIncomeDeduction = ({
   yearsOfService,
-  isDisability
+  isDisability,
 }: CalcRetirementIncomeDeductionInput) => {
   const deduction = () => {
     if (yearsOfService <= 20) {
@@ -30,7 +30,7 @@ export const calcTaxableRetirementIncome = ({
   isOfficer,
   yearsOfService,
   severancePay,
-  retirementIncomeDeduction
+  retirementIncomeDeduction,
 }: CalcTaxableRetirementIncome) => {
   const paidAfterDeduction = severancePay - retirementIncomeDeduction;
 
@@ -101,7 +101,7 @@ export const calcIncomeTaxForSeverancePay = (input: CalcSeverancePayTaxInput) =>
     isOfficer,
     yearsOfService,
     severancePay,
-    retirementIncomeDeduction
+    retirementIncomeDeduction,
   });
   const retirementIncomeTax: number = calcRetirementIncomeTax({ taxableRetirementIncome });
   return calcRetirementTotalTax({ retirementIncomeTax });
@@ -112,7 +112,7 @@ export const calcSeverancePayTaxInputScheme = z
     yearsOfService: z.number().int().gte(1).lte(100),
     isDisability: z.boolean(),
     isOfficer: z.boolean(),
-    severancePay: z.number().int().gte(0).lte(1_000_000_000_000)
+    severancePay: z.number().int().gte(0).lte(1_000_000_000_000),
   })
   .strict();
 

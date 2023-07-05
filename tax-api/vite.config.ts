@@ -6,13 +6,10 @@ export default defineConfig({
     environment: "node",
     coverage: {
       provider: "c8",
-      reporter: ["text","html"],
+      reporter: ["text", "html"],
       reportsDirectory: "./reports/coverage",
     },
-    reporters: [
-      "default",
-      "junit",
-    ],
+    reporters: ["default", "junit"],
     outputFile: "./reports/vitest/vitest-report.xml",
   },
   server: {

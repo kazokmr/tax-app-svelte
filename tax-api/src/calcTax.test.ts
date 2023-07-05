@@ -3,7 +3,7 @@ import {
   calcRetirementIncomeDeduction,
   calcRetirementIncomeTax,
   calcRetirementTotalTax,
-  calcTaxableRetirementIncome
+  calcTaxableRetirementIncome,
 } from "./calcTax";
 import { describe, expect, test } from "vitest";
 
@@ -22,10 +22,10 @@ describe("退職所得控除額", () => {
           ({ yearsOfService, isDisability, expected }) => {
             const deduction = calcRetirementIncomeDeduction({
               yearsOfService,
-              isDisability
+              isDisability,
             });
             expect(deduction).toBe(expected);
-          }
+          },
         );
       });
       describe("障害者になったことが直接の原因ではない場合は100万円を加える", () => {
@@ -40,10 +40,10 @@ describe("退職所得控除額", () => {
           ({ yearsOfService, isDisability, expected }) => {
             const deduction = calcRetirementIncomeDeduction({
               yearsOfService,
-              isDisability
+              isDisability,
             });
             expect(deduction).toBe(expected);
-          }
+          },
         );
       });
     });
@@ -57,10 +57,10 @@ describe("退職所得控除額", () => {
           ({ yearsOfService, isDisability, expected }) => {
             const deduction = calcRetirementIncomeDeduction({
               yearsOfService,
-              isDisability
+              isDisability,
             });
             expect(deduction).toBe(expected);
-          }
+          },
         );
       });
       describe("障害者になったことが直接の原因ではない場合は100万円を加える", () => {
@@ -72,10 +72,10 @@ describe("退職所得控除額", () => {
           ({ yearsOfService, isDisability, expected }) => {
             const deduction = calcRetirementIncomeDeduction({
               yearsOfService,
-              isDisability
+              isDisability,
             });
             expect(deduction).toBe(expected);
-          }
+          },
         );
       });
     });
@@ -92,10 +92,10 @@ describe("退職所得控除額", () => {
           ({ yearsOfService, isDisability, expected }) => {
             const deduction = calcRetirementIncomeDeduction({
               yearsOfService,
-              isDisability
+              isDisability,
             });
             expect(deduction).toBe(expected);
-          }
+          },
         );
       });
       describe("障害者になったことが直接の原因の場合は100万円を加える", () => {
@@ -108,10 +108,10 @@ describe("退職所得控除額", () => {
           ({ yearsOfService, isDisability, expected }) => {
             const deduction = calcRetirementIncomeDeduction({
               yearsOfService,
-              isDisability
+              isDisability,
             });
             expect(deduction).toBe(expected);
-          }
+          },
         );
       });
     });
@@ -134,10 +134,10 @@ describe("課税退職所得金額", () => {
             isOfficer,
             yearsOfService,
             severancePay,
-            retirementIncomeDeduction
+            retirementIncomeDeduction,
           });
           expect(income).toBe(expected);
-        }
+        },
       );
     });
     describe("役員等の勤続年数が5年を超える", () => {
@@ -154,10 +154,10 @@ describe("課税退職所得金額", () => {
             isOfficer,
             yearsOfService,
             severancePay,
-            retirementIncomeDeduction
+            retirementIncomeDeduction,
           });
           expect(income).toBe(expected);
-        }
+        },
       );
     });
   });
@@ -178,10 +178,10 @@ describe("課税退職所得金額", () => {
               isOfficer,
               yearsOfService,
               severancePay,
-              retirementIncomeDeduction
+              retirementIncomeDeduction,
             });
             expect(income).toBe(expected);
-          }
+          },
         );
       });
       describe("退職金の額から退職所得控除額を差し引いた残額が300万円を超える", () => {
@@ -197,10 +197,10 @@ describe("課税退職所得金額", () => {
               isOfficer,
               yearsOfService,
               severancePay,
-              retirementIncomeDeduction
+              retirementIncomeDeduction,
             });
             expect(income).toBe(expected);
-          }
+          },
         );
       });
     });
@@ -218,10 +218,10 @@ describe("課税退職所得金額", () => {
             isOfficer,
             yearsOfService,
             severancePay,
-            retirementIncomeDeduction
+            retirementIncomeDeduction,
           });
           expect(income).toBe(expected);
-        }
+        },
       );
     });
   });
@@ -237,7 +237,7 @@ describe("令和４年分　所得税額", () => {
       ({ taxableRetirementIncome, expected }) => {
         const incomeTax = calcRetirementIncomeTax({ taxableRetirementIncome });
         expect(incomeTax).toBe(expected);
-      }
+      },
     );
   });
   describe("課税退職所得金額が 1_950_000円未満 -> 税率 5% 控除額 0円", () => {
@@ -250,7 +250,7 @@ describe("令和４年分　所得税額", () => {
       ({ taxableRetirementIncome, expected }) => {
         const incomeTax = calcRetirementIncomeTax({ taxableRetirementIncome });
         expect(incomeTax).toBe(expected);
-      }
+      },
     );
   });
   describe("課税退職所得金額が 3_300_000円未満 -> 税率 10% 控除額 97_500円", () => {
@@ -263,7 +263,7 @@ describe("令和４年分　所得税額", () => {
       ({ taxableRetirementIncome, expected }) => {
         const incomeTax = calcRetirementIncomeTax({ taxableRetirementIncome });
         expect(incomeTax).toBe(expected);
-      }
+      },
     );
   });
   describe("課税退職所得金額が 6_950_000円未満 -> 税率 20% 控除額 427_500円", () => {
@@ -276,7 +276,7 @@ describe("令和４年分　所得税額", () => {
       ({ taxableRetirementIncome, expected }) => {
         const incomeTax = calcRetirementIncomeTax({ taxableRetirementIncome });
         expect(incomeTax).toBe(expected);
-      }
+      },
     );
   });
   describe("課税退職所得金額が 9_000_000円未満 -> 税率 23% 控除額 636_000円", () => {
@@ -289,7 +289,7 @@ describe("令和４年分　所得税額", () => {
       ({ taxableRetirementIncome, expected }) => {
         const incomeTax = calcRetirementIncomeTax({ taxableRetirementIncome });
         expect(incomeTax).toBe(expected);
-      }
+      },
     );
   });
   describe("課税退職所得金額が 18_000_000円未満 -> 税率 33% 控除額 1_536_000円", () => {
@@ -302,7 +302,7 @@ describe("令和４年分　所得税額", () => {
       ({ taxableRetirementIncome, expected }) => {
         const incomeTax = calcRetirementIncomeTax({ taxableRetirementIncome });
         expect(incomeTax).toBe(expected);
-      }
+      },
     );
   });
   describe("課税退職所得金額が 40_000_000円未満 -> 税率 40% 控除額 2_796_000円", () => {
@@ -315,7 +315,7 @@ describe("令和４年分　所得税額", () => {
       ({ taxableRetirementIncome, expected }) => {
         const incomeTax = calcRetirementIncomeTax({ taxableRetirementIncome });
         expect(incomeTax).toBe(expected);
-      }
+      },
     );
   });
   describe("課税退職所得金額が 40_000_000円以上 -> 税率 45% 控除額 4_796_000円", () => {
@@ -328,7 +328,7 @@ describe("令和４年分　所得税額", () => {
       ({ taxableRetirementIncome, expected }) => {
         const incomeTax = calcRetirementIncomeTax({ taxableRetirementIncome });
         expect(incomeTax).toBe(expected);
-      }
+      },
     );
   });
 });
@@ -345,7 +345,7 @@ describe("退職金の所得税及び復興特別所得税の源泉徴収税額"
     ({ retirementIncomeTax, expected }) => {
       const totalTax = calcRetirementTotalTax({ retirementIncomeTax });
       expect(totalTax).toBe(expected);
-    }
+    },
   );
 });
 
@@ -368,10 +368,10 @@ describe("退職金の所得税額", () => {
         yearsOfService,
         isDisability,
         isOfficer,
-        severancePay
+        severancePay,
       });
       expect(tax).toBe(expected);
-    }
+    },
   );
   describe("入力値バリデーション", () => {
     describe("勤続年数は1以上100以下の整数であること", () => {
@@ -390,8 +390,8 @@ describe("退職金の所得税額", () => {
             yearsOfService,
             isDisability: false,
             isOfficer: false,
-            severancePay: 100_000_000
-          })
+            severancePay: 100_000_000,
+          }),
         ).toThrowError("Invalid argument.");
       });
       test.each`
@@ -404,8 +404,8 @@ describe("退職金の所得税額", () => {
             yearsOfService,
             isDisability: false,
             isOfficer: false,
-            severancePay: 100_000_000
-          })
+            severancePay: 100_000_000,
+          }),
         ).toBe(expected);
       });
     });
@@ -421,8 +421,8 @@ describe("退職金の所得税額", () => {
             yearsOfService: 5,
             isDisability: false,
             isOfficer: false,
-            severancePay
-          })
+            severancePay,
+          }),
         ).toThrowError("Invalid argument");
       });
       test.each`
@@ -435,8 +435,8 @@ describe("退職金の所得税額", () => {
             yearsOfService: 5,
             isDisability: false,
             isOfficer: false,
-            severancePay
-          })
+            severancePay,
+          }),
         ).toBe(expected);
       });
     });
@@ -452,8 +452,8 @@ describe("退職金の所得税額", () => {
             yearsOfService,
             isDisability: true,
             isOfficer: true,
-            severancePay: 8_000_000
-          })
+            severancePay: 8_000_000,
+          }),
         ).toThrowError("Invalid argument");
       });
       test.each`
@@ -467,8 +467,8 @@ describe("退職金の所得税額", () => {
             yearsOfService: 5,
             isDisability,
             isOfficer: false,
-            severancePay: 8_000_000
-          })
+            severancePay: 8_000_000,
+          }),
         ).toThrowError("Invalid argument");
       });
       test.each`
@@ -482,8 +482,8 @@ describe("退職金の所得税額", () => {
             yearsOfService: 5,
             isDisability: false,
             isOfficer,
-            severancePay: 8_000_000
-          })
+            severancePay: 8_000_000,
+          }),
         ).toThrowError("Invalid argument");
       });
       test.each`
@@ -497,8 +497,8 @@ describe("退職金の所得税額", () => {
             yearsOfService: 5,
             isDisability: false,
             isOfficer: false,
-            severancePay
-          })
+            severancePay,
+          }),
         ).toThrowError("Invalid argument");
       });
     });
@@ -510,8 +510,8 @@ describe("退職金の所得税額", () => {
           calcIncomeTaxForSeverancePay({
             isDisability: false,
             isOfficer: false,
-            severancePay: 8_000_000
-          })
+            severancePay: 8_000_000,
+          }),
         ).toThrowError("Invalid argument");
       });
       test("障害者となったことに直接起因して退職しかが未定義の場合はエラー", () => {
@@ -521,8 +521,8 @@ describe("退職金の所得税額", () => {
           calcIncomeTaxForSeverancePay({
             yearsOfService: 5,
             isOfficer: false,
-            severancePay: 8_000_000
-          })
+            severancePay: 8_000_000,
+          }),
         ).toThrowError("Invalid argument");
       });
       test("役員等かが未定義の場合はエラー", () => {
@@ -532,8 +532,8 @@ describe("退職金の所得税額", () => {
           calcIncomeTaxForSeverancePay({
             yearsOfService: 5,
             isDisability: false,
-            severancePay: 8_000_000
-          })
+            severancePay: 8_000_000,
+          }),
         ).toThrowError("Invalid argument");
       });
       test("退職金が未定義の場合はエラー", () => {
@@ -543,8 +543,8 @@ describe("退職金の所得税額", () => {
           calcIncomeTaxForSeverancePay({
             yearsOfService: 5,
             isDisability: false,
-            isOfficer: false
-          })
+            isOfficer: false,
+          }),
         ).toThrowError("Invalid argument");
       });
     });
@@ -558,8 +558,8 @@ describe("退職金の所得税額", () => {
             severancePay: 8_000_000,
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
-            isPaid: true
-          })
+            isPaid: true,
+          }),
         ).toThrowError("Invalid argument"));
       test("空オブジェクトの場合はエラー", () =>
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment

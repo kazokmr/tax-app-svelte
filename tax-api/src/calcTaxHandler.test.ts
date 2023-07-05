@@ -8,7 +8,7 @@ describe("POST /calc-tax", () => {
       yearsOfService: 6,
       isOfficer: false,
       isDisability: false,
-      severancePay: 3_000_000
+      severancePay: 3_000_000,
     });
     expect(res.status).toBe(200);
     expect(res.body).toStrictEqual({ tax: 15_315 });
@@ -26,7 +26,7 @@ describe("POST /calc-tax", () => {
           yearsOfService,
           isOfficer: false,
           isDisability: false,
-          severancePay: 3_000_000
+          severancePay: 3_000_000,
         });
         expect(res.status).toBe(400);
         expect(res.body).toStrictEqual({ message: "Invalid parameter." });
@@ -43,7 +43,7 @@ describe("POST /calc-tax", () => {
           yearsOfService: 6,
           isOfficer: false,
           isDisability: false,
-          severancePay
+          severancePay,
         });
         expect(res.status).toBe(400);
         expect(res.body).toStrictEqual({ message: "Invalid parameter." });
@@ -60,7 +60,7 @@ describe("POST /calc-tax", () => {
           yearsOfService,
           isDisability: false,
           isOfficer: false,
-          severancePay: 3_000_000
+          severancePay: 3_000_000,
         });
         expect(res.status).toBe(400);
         expect(res.body).toStrictEqual({ message: "Invalid parameter." });
@@ -77,11 +77,11 @@ describe("POST /calc-tax", () => {
             yearsOfService: 6,
             isDisability,
             isOfficer: false,
-            severancePay: 3_000_000
+            severancePay: 3_000_000,
           });
           expect(res.status).toBe(400);
           expect(res.body).toStrictEqual({ message: "Invalid parameter." });
-        }
+        },
       );
       test.each`
         isOfficer
@@ -93,7 +93,7 @@ describe("POST /calc-tax", () => {
           yearsOfService: 6,
           isDisability: false,
           isOfficer,
-          severancePay: 3_000_000
+          severancePay: 3_000_000,
         });
         expect(res.status).toBe(400);
         expect(res.body).toStrictEqual({ message: "Invalid parameter." });
@@ -108,7 +108,7 @@ describe("POST /calc-tax", () => {
           yearsOfService: 6,
           isOfficer: false,
           isDisability: false,
-          severancePay
+          severancePay,
         });
         expect(res.status).toBe(400);
         expect(res.body).toStrictEqual({ message: "Invalid parameter." });
@@ -119,7 +119,7 @@ describe("POST /calc-tax", () => {
         const res = await request(app).post("/calc-tax").send({
           isDisability: false,
           isOfficer: false,
-          severancePay: 3_000_000
+          severancePay: 3_000_000,
         });
         expect(res.status).toBe(400);
         expect(res.body).toStrictEqual({ message: "Invalid parameter." });
@@ -128,7 +128,7 @@ describe("POST /calc-tax", () => {
         const res = await request(app).post("/calc-tax").send({
           yearsOfService: 6,
           isOfficer: false,
-          severancePay: 3_000_000
+          severancePay: 3_000_000,
         });
         expect(res.status).toBe(400);
         expect(res.body).toStrictEqual({ message: "Invalid parameter." });
@@ -137,7 +137,7 @@ describe("POST /calc-tax", () => {
         const res = await request(app).post("/calc-tax").send({
           yearsOfService: 6,
           isDisability: false,
-          severancePay: 3_000_000
+          severancePay: 3_000_000,
         });
         expect(res.status).toBe(400);
         expect(res.body).toStrictEqual({ message: "Invalid parameter." });
@@ -146,7 +146,7 @@ describe("POST /calc-tax", () => {
         const res = await request(app).post("/calc-tax").send({
           yearsOfService: 6,
           isDisability: false,
-          isOfficer: false
+          isOfficer: false,
         });
         expect(res.status).toBe(400);
         expect(res.body).toStrictEqual({ message: "Invalid parameter." });
@@ -159,7 +159,7 @@ describe("POST /calc-tax", () => {
           isDisability: false,
           isOfficer: false,
           severancePay: 3_000_000,
-          invalidProperty: ""
+          invalidProperty: "",
         });
         expect(res.status).toBe(400);
         expect(res.body).toStrictEqual({ message: "Invalid parameter." });
