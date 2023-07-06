@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/svelte";
 import Presentation from "$lib/components/Presentation.svelte";
 
 const meta = {
-  component: Presentation
+  component: Presentation,
 } satisfies Meta<Presentation>;
 
 export default meta;
@@ -14,14 +14,14 @@ export const Standard: Story = {
       yearsOfService: 10,
       isDisability: false,
       isOfficer: "0",
-      severancePay: 5_000_000
+      severancePay: 5_000_000,
     },
-    tax: 10000
-  }
+    tax: 10000,
+  },
 };
 
 export const NoResult: Story = {
   args: {
-    tax: null
-  }
+    tax: null,
+  },
 };

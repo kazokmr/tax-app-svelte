@@ -27,5 +27,5 @@ export const actions = {
       return fail(400, { form, tax: 0 });
     }
     return { form, tax };
-  }
+  },
 } satisfies Actions;

@@ -22,8 +22,8 @@ test.describe("ページコンポーネントのAction操作", () => {
       yearsOfService: 10,
       isDisability: false,
       isOfficer: false,
-      severancePay: 5000000
-    }
+      severancePay: 5000000,
+    },
   };
 
   test("所得税を計算できる", async ({ page }) => {
@@ -31,8 +31,8 @@ test.describe("ページコンポーネントのAction操作", () => {
     const mockedResponse: IWireMockResponse = {
       status: 200,
       body: {
-        tax: 25525
-      }
+        tax: 25525,
+      },
     };
     await mock.register(request, mockedResponse);
 
@@ -54,8 +54,8 @@ test.describe("ページコンポーネントのAction操作", () => {
     const mockedResponse: IWireMockResponse = {
       status: 400,
       body: {
-        message: "Invalid parameter."
-      }
+        message: "Invalid parameter.",
+      },
     };
     await mock.register(request, mockedResponse);
 
@@ -71,7 +71,7 @@ test.describe("ページコンポーネントのAction操作", () => {
 
     // Then
     await expect(
-      page.getByText("エラーが発生しました。しばらくしてからもう一度お試しください。")
+      page.getByText("エラーが発生しました。しばらくしてからもう一度お試しください。"),
     ).toBeVisible();
   });
 });

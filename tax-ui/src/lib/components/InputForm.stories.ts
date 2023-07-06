@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/svelte";
 import InputForm from "./InputForm.svelte";
 
 const meta = {
-  component: InputForm
+  component: InputForm,
 } satisfies Meta<InputForm>;
 
 export default meta;
@@ -14,7 +14,7 @@ export const Standard: Story = {
       yearsOfService: 10,
       isDisability: false,
       isOfficer: "0",
-      severancePay: 5_000_000
-    }
-  }
+      severancePay: 5_000_000,
+    },
+  },
 };

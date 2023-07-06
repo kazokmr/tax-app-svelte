@@ -6,7 +6,7 @@ module.exports = {
     "plugin:tailwindcss/recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:storybook/recommended",
-    "prettier"
+    "prettier",
   ],
   parser: "@typescript-eslint/parser",
   plugins: ["@typescript-eslint"],
@@ -14,20 +14,20 @@ module.exports = {
     sourceType: "module",
     ecmaVersion: "latest",
     extraFileExtensions: [".svelte"],
-    warnOnUnsupportedTypeScriptVersion: false
+    warnOnUnsupportedTypeScriptVersion: false,
   },
   env: {
     browser: true,
     es2021: true,
-    node: true
+    node: true,
   },
   overrides: [
     {
       files: ["*.svelte"],
       parser: "svelte-eslint-parser",
       parserOptions: {
-        parser: "@typescript-eslint/parser"
-      }
-    }
-  ]
+        parser: "@typescript-eslint/parser",
+      },
+    },
+  ],
 };

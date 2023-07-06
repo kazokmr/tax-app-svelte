@@ -5,7 +5,7 @@ export default defineConfig({
   test: {
     environment: "node",
     coverage: {
-      provider: "c8",
+      provider: "v8",
       reporter: ["text", "html"],
       reportsDirectory: "./reports/coverage",
     },

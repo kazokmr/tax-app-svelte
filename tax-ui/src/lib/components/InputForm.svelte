@@ -28,7 +28,7 @@
     },
     onError: () => {
       dispatch("changeStatus", { calcStatus: "failed" });
-    }
+    },
   });
 </script>
 

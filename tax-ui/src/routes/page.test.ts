@@ -25,7 +25,7 @@ describe("ページコンポーネント", async () => {
     // Then
     expect(screen.getByRole("spinbutton", { name: "勤続年数" })).toHaveValue(10);
     expect(
-      screen.getByRole("checkbox", { name: "障害者となったことに直接基因して退職した" })
+      screen.getByRole("checkbox", { name: "障害者となったことに直接基因して退職した" }),
     ).not.toBeChecked();
     expect(screen.getByRole("radio", { name: "役員等以外" })).toBeChecked();
     expect(screen.getByRole("radio", { name: "役員等" })).not.toBeChecked();
@@ -40,10 +40,10 @@ describe("ページコンポーネント", async () => {
           context.json({
             type: "success",
             status: 200,
-            data: devalue.stringify({ form, tax: 10000 })
-          })
-        )
-      )
+            data: devalue.stringify({ form, tax: 10000 }),
+          }),
+        ),
+      ),
     );
     const form = await superValidate(inputSchema);
     render(Page, { data: { form } });
@@ -152,10 +152,10 @@ describe("ページコンポーネント", async () => {
           context.json({
             type: "error",
             status: 400,
-            error: devalue.stringify("Invalid parameter.")
-          })
-        )
-      )
+            error: devalue.stringify("Invalid parameter."),
+          }),
+        ),
+      ),
     );
     const form = await superValidate(inputSchema);
     form.data.yearsOfService = 20;
@@ -168,7 +168,7 @@ describe("ページコンポーネント", async () => {
 
     // Then
     expect(
-      await screen.findByText("エラーが発生しました。しばらくしてからもう一度お試しください。")
+      await screen.findByText("エラーが発生しました。しばらくしてからもう一度お試しください。"),
     ).toBeInTheDocument();
   });
 });
@@ -304,7 +304,7 @@ describe("勤続年数が入力できる", () => {
     await waitFor(() => {
       expect(screen.queryByText("勤続年数を入力してください")).not.toBeInTheDocument();
       expect(
-        screen.queryByText("勤続年数は１以上の整数を入力してください")
+        screen.queryByText("勤続年数は１以上の整数を入力してください"),
       ).not.toBeInTheDocument();
       expect(screen.queryByText("整数を入力してください")).not.toBeInTheDocument();
       expect(screen.queryByText("１以上の整数を入力してください")).not.toBeInTheDocument();
