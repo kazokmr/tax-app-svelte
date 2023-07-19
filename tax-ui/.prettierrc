@@ -4,7 +4,6 @@
   "trailingComma": "all",
   "printWidth": 100,
   "plugins": ["prettier-plugin-svelte", "prettier-plugin-tailwindcss"],
-  "pluginSearchDirs": ["."],
   "svelteSortOrder": "options-styles-scripts-markup",
   "svelteStrictMode": true,
   "svelteAllowShorthand": false,
@@ -16,16 +15,5 @@
         "parser": "svelte"
       }
     }
-  ],
-  "importOrder": [
-    "^(svelte/(.*)$)|^(svelte$)",
-    "^(@sveltejs/(.*)$)|^(@sveltejs/kit$)",
-    "<THIRD_PARTY_MODULES>",
-    "^\\$app/(.*)$",
-    "^\\$env/(.*)$",
-    "^\\$service-worker",
-    "^\\$lib/(.*)$",
-    "^[./]"
-  ],
-  "importOrderSeparation": false
+  ]
 }
