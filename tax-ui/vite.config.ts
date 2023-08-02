@@ -10,4 +10,9 @@ export default defineConfig({
     setupFiles: ["./vitest.setup.ts"],
     exclude: [...configDefaults.exclude, "test"],
   },
+  server: {
+    fs: {
+      allow: process.env.VITEST ? ["./vitest.setup.ts"] : undefined,
+    },
+  },
 });
