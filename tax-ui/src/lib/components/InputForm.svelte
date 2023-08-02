@@ -18,7 +18,7 @@
     },
     onResult: ({ result }) => {
       if (result.type === "success") {
-        dispatch("calculate", { tax: result.data.tax });
+        dispatch("calculate", { tax: result.data?.tax });
         dispatch("changeStatus", { calcStatus: "succeeded" });
       } else if (result.type === "failure" && !result.data?.form.valid) {
         dispatch("changeStatus", { calcStatus: "before-calculation" });
