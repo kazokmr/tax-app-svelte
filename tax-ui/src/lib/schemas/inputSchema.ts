@@ -25,7 +25,7 @@ export const inputSchema = z
       .lte(1_000_000_000_000, { message: "1,000,000,000,000円までです" })
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      .default("" as number),
+      .default("" as unknown as number),
   })
   .strict();
 

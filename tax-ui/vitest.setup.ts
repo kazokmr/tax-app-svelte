@@ -25,6 +25,7 @@ vi.mock("$app/navigation", (): typeof navigation => ({
   invalidateAll: () => Promise.resolve(),
   preloadData: () => Promise.resolve(),
   preloadCode: () => Promise.resolve(),
+  onNavigate: () => Promise.resolve(),
 }));
 
 vi.mock("$app/stores", (): typeof stores => {
