@@ -4,9 +4,9 @@
   "version": "1.0.0",
   "license": "MIT",
   "engines": {
-    "node": "18.x"
+    "node": "20.x"
   },
-  "packageManager": "npm@9.6.6",
+  "packageManager": "npm@10.2.0",
   "scripts": {
     "dev": "vite",
     "check": "tsc --noEmit",
