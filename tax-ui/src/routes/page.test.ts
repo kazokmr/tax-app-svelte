@@ -2,7 +2,7 @@ import { render, screen, waitFor } from "@testing-library/svelte";
 import "@testing-library/jest-dom/vitest";
 import userEvent from "@testing-library/user-event";
 import * as devalue from "devalue";
-import { rest } from "msw";
+import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
 import { superValidate } from "sveltekit-superforms/server";
 import { afterAll, afterEach, beforeAll, describe, expect, test } from "vitest";
@@ -36,14 +36,12 @@ describe("ページコンポーネント", async () => {
   test.skip("所得税を計算できる", async () => {
     // Begin
     server.use(
-      rest.post("http://localhost:3000/*", (req, res, context) =>
-        res(
-          context.json({
-            type: "success",
-            status: 200,
-            data: devalue.stringify({ form, tax: 10000 }),
-          }),
-        ),
+      http.post("http://localhost:3000/*", () =>
+        HttpResponse.json({
+          type: "success",
+          status: 200,
+          data: devalue.stringify({ form, tax: 10000 }),
+        }),
       ),
     );
     const form = await superValidate(inputSchema);
@@ -148,14 +146,12 @@ describe("ページコンポーネント", async () => {
   test.skip("所得税計算APIのステータスコードが200-299以外の場合", async () => {
     // Begin
     server.use(
-      rest.post("http://localhost:3000/*", (req, res, context) =>
-        res(
-          context.json({
-            type: "error",
-            status: 400,
-            error: devalue.stringify("Invalid parameter."),
-          }),
-        ),
+      http.post("http://localhost:3000/*", () =>
+        Response.json({
+          type: "error",
+          status: 400,
+          error: devalue.stringify("Invalid parameter."),
+        }),
       ),
     );
     const form = await superValidate(inputSchema);
