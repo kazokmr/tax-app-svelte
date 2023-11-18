@@ -98,7 +98,8 @@ describe("ページコンポーネント", async () => {
     await user.click(screen.getByRole("checkbox", { name: /障害者/i }));
 
     // Then
-    expect(await screen.getByRole("checkbox", { name: /障害者/i })).not.toBeChecked();
+    await screen.findByRole("checkbox", { name: /障害者/i });
+    expect(screen.getByRole("checkbox", { name: /障害者/i })).not.toBeChecked();
   });
   test("役員等を選択できる", async () => {
     // Begin
