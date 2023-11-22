@@ -29,4 +29,4 @@ export const inputSchema = z
   })
   .strict();
 
-export type InputSchema = z.infer<typeof inputSchema>;
+export type InputSchema = typeof inputSchema;

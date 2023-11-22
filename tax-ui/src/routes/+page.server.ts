@@ -2,7 +2,6 @@ import { fail } from "@sveltejs/kit";
 import { superValidate } from "sveltekit-superforms/server";
 import type { CalcTaxResult } from "$lib/fetch/client/calcTax";
 import { calcTax } from "$lib/fetch/client/calcTax";
-import type { InputSchema } from "$lib/schemas/inputSchema";
 import { inputSchema } from "$lib/schemas/inputSchema";
 import type { Actions, PageServerLoad } from "./$types";
 
@@ -17,7 +16,7 @@ export const actions = {
     if (!form.valid) {
       return fail(400, { form, tax: 0 });
     }
-    const param = form.data as InputSchema;
+    const param = form.data;
     const response = await calcTax({ fetch, ...param });
     let tax = 0;
     if (response.ok) {
