@@ -147,7 +147,7 @@ describe("ページコンポーネント", async () => {
     // Begin
     server.use(
       http.post("http://localhost:3000/*", () =>
-        Response.json({
+        HttpResponse.json({
           type: "error",
           status: 400,
           error: devalue.stringify("Invalid parameter."),
