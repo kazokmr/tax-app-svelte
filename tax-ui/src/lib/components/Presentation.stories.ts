@@ -3,6 +3,20 @@ import Presentation from "$lib/components/Presentation.svelte";
 
 const meta = {
   component: Presentation,
+  parameters: {
+    sveltekit_experimental: {
+      stores: {
+        page: {
+          data: {
+            test: "passed",
+          },
+        },
+        navigating: {
+          type: "test",
+        },
+      },
+    },
+  },
 } satisfies Meta<Presentation>;
 
 export default meta;

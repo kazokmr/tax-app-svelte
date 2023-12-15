@@ -3,6 +3,20 @@ import InputForm from "./InputForm.svelte";
 
 const meta = {
   component: InputForm,
+  parameters: {
+    sveltekit_experimental: {
+      stores: {
+        page: {
+          data: {
+            test: "passed",
+          },
+        },
+        navigating: {
+          type: "test",
+        },
+      },
+    },
+  },
 } satisfies Meta<InputForm>;
 
 export default meta;
