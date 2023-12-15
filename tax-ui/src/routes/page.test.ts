@@ -1,8 +1,6 @@
 import { render, screen, waitFor } from "@testing-library/svelte";
 import "@testing-library/jest-dom/vitest";
 import userEvent from "@testing-library/user-event";
-import * as devalue from "devalue";
-import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
 import { superValidate } from "sveltekit-superforms/server";
 import { inputSchema } from "$lib/schemas/inputSchema";
@@ -31,35 +29,6 @@ describe("ページコンポーネント", async () => {
     expect(screen.getByRole("radio", { name: "役員等" })).not.toBeChecked();
     expect(screen.getByRole("spinbutton", { name: "退職金" })).toHaveValue(5_000_000);
     expect(screen.getByLabelText("tax").textContent).toBe("--- 円");
-  });
-  test.skip("所得税を計算できる", async () => {
-    // Begin
-    server.use(
-      http.post("http://localhost:3000/*", () =>
-        HttpResponse.json({
-          type: "success",
-          status: 200,
-          data: devalue.stringify({ form, tax: 10000 }),
-        }),
-      ),
-    );
-    const form = await superValidate(inputSchema);
-    render(Page, { data: { form } });
-
-    // When
-    const user = userEvent.setup();
-    await user.click(screen.getByRole("spinbutton", { name: "勤続年数" }));
-    await user.clear(screen.getByRole("spinbutton", { name: "勤続年数" }));
-    await user.keyboard("10");
-    await user.click(screen.getByRole("spinbutton", { name: "退職金" }));
-    await user.clear(screen.getByRole("spinbutton", { name: "退職金" }));
-    await user.keyboard("5000000");
-    await user.click(screen.getByRole("button", { name: "所得税を計算する" }));
-
-    // Then
-    await waitFor(() => {
-      expect(screen.getByLabelText("tax")).toHaveTextContent("10,000 円");
-    });
   });
   test("勤続年数を入力できる", async () => {
     // Begin
@@ -142,31 +111,6 @@ describe("ページコンポーネント", async () => {
 
     // Then
     expect(await screen.findByRole("spinbutton", { name: "退職金" })).toHaveValue(1234567);
-  });
-  test.skip("所得税計算APIのステータスコードが200-299以外の場合", async () => {
-    // Begin
-    server.use(
-      http.post("http://localhost:3000/*", () =>
-        HttpResponse.json({
-          type: "error",
-          status: 400,
-          error: devalue.stringify("Invalid parameter."),
-        }),
-      ),
-    );
-    const form = await superValidate(inputSchema);
-    form.data.yearsOfService = 20;
-    form.data.severancePay = 5_000_000;
-    render(Page, { data: { form } });
-
-    // When
-    const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: /所得税を/i }));
-
-    // Then
-    expect(
-      await screen.findByText("エラーが発生しました。しばらくしてからもう一度お試しください。"),
-    ).toBeInTheDocument();
   });
 });
 
