@@ -6,14 +6,8 @@ const meta = {
   parameters: {
     sveltekit_experimental: {
       stores: {
-        page: {
-          data: {
-            test: "passed",
-          },
-        },
-        navigating: {
-          type: "test",
-        },
+        page: {},
+        navigating: {},
       },
     },
   },
@@ -30,5 +24,6 @@ export const Standard: Story = {
       isOfficer: "0",
       severancePay: 5_000_000,
     },
+    calcStatus: "succeeded",
   },
 };
