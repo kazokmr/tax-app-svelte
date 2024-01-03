@@ -6,7 +6,7 @@
   "engines": {
     "node": "20.x"
   },
-  "packageManager": "pnpm@8.13.0+sha256.fbcf256db6d06bc189e31df34b3ed61220f3ba9f78a2ca8fe7be0fce4670dbd3",
+  "packageManager": "pnpm@8.14.0+sha256.9cebf61abd83f68177b29484da72da9751390eaad46dfc3072d266bfbb1ba7bf",
   "scripts": {
     "dev": "vite",
     "check": "tsc --noEmit",
@@ -19,8 +19,8 @@
     "@types/express": "^4.17.21",
     "@types/node": "^20.10.6",
     "@types/supertest": "^6.0.2",
-    "@typescript-eslint/eslint-plugin": "^6.16.0",
-    "@typescript-eslint/parser": "^6.16.0",
+    "@typescript-eslint/eslint-plugin": "^6.17.0",
+    "@typescript-eslint/parser": "^6.17.0",
     "@vitest/coverage-v8": "^1.1.1",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
