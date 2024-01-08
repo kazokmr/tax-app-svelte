@@ -54,7 +54,7 @@ describe("ページコンポーネント", async () => {
     await user.click(screen.getByRole("checkbox", { name: /障害者/i }));
 
     // Then
-    expect(await screen.getByRole("checkbox", { name: /障害者/i })).toBeChecked();
+    expect(screen.getByRole("checkbox", { name: /障害者/i })).toBeChecked();
   });
   test("退職基因チェックボックスを未選択にできる", async () => {
     // Begin
@@ -81,8 +81,8 @@ describe("ページコンポーネント", async () => {
     await user.click(screen.getByRole("radio", { name: "役員等" }));
 
     // Then
-    expect(await screen.getByRole("radio", { name: "役員等" })).toBeChecked();
-    expect(await screen.getByRole("radio", { name: "役員等以外" })).not.toBeChecked();
+    expect(screen.getByRole("radio", { name: "役員等" })).toBeChecked();
+    expect(screen.getByRole("radio", { name: "役員等以外" })).not.toBeChecked();
   });
   test("役員等以外を選択できる", async () => {
     // Begin
@@ -95,8 +95,8 @@ describe("ページコンポーネント", async () => {
     await user.click(screen.getByRole("radio", { name: "役員等以外" }));
 
     // Then
-    expect(await screen.getByRole("radio", { name: "役員等" })).not.toBeChecked();
-    expect(await screen.getByRole("radio", { name: "役員等以外" })).toBeChecked();
+    expect(screen.getByRole("radio", { name: "役員等" })).not.toBeChecked();
+    expect(screen.getByRole("radio", { name: "役員等以外" })).toBeChecked();
   });
   test("退職金を入力できる", async () => {
     // Begin
@@ -160,7 +160,7 @@ describe("勤続年数のバリデーション", () => {
     await user.tab();
 
     // Then
-    await expect(screen.getByText("勤続年数は１以上の整数を入力してください")).toBeInTheDocument();
+    expect(screen.getByText("勤続年数は１以上の整数を入力してください")).toBeInTheDocument();
   });
 });
 
@@ -208,7 +208,7 @@ describe("退職金のバリデーション", () => {
     await user.tab();
 
     // Then
-    await expect(screen.getByText("退職金を入力してください")).toBeInTheDocument();
+    expect(screen.getByText("退職金を入力してください")).toBeInTheDocument();
   });
 });
 
