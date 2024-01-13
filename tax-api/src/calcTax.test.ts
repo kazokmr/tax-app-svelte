@@ -4,7 +4,7 @@ import {
   calcRetirementIncomeTax,
   calcRetirementTotalTax,
   calcTaxableRetirementIncome,
-} from "./calcTax";
+} from "./calcTax.js";
 import { describe, expect, test } from "vitest";
 
 describe("退職所得控除額", () => {

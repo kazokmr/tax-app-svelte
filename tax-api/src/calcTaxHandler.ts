@@ -1,4 +1,4 @@
-import { calcIncomeTaxForSeverancePay, calcSeverancePayTaxInputScheme } from "./calcTax";
+import { calcIncomeTaxForSeverancePay, calcSeverancePayTaxInputScheme } from "./calcTax.js";
 import { Router } from "express";
 
 const router = Router();

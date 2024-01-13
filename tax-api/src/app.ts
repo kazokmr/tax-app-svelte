@@ -1,4 +1,4 @@
-import calcTaxHandler from "./calcTaxHandler";
+import calcTaxHandler from "./calcTaxHandler.js";
 import cors from "cors";
 import express from "express";
 
