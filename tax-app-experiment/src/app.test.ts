@@ -4,7 +4,7 @@ import app from "./app";
 
 describe("POST /check-body", () => {
   test("responds with message", async () => {
-    const response = await request(app).post("/check-body").send({
+    const response = await request(app).post("/calc-tax").send({
       yearsOfService: 5,
       isDisability: false,
       isOfficer: false,

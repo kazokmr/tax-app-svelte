@@ -5,18 +5,18 @@ export default defineConfig({
   test: {
     environment: "node",
     coverage: {
-      provider: "c8",
-      reporter: ["html"],
-      reportsDirectory: "./reports/coverage",
+      provider: "v8",
+      reporter: ["html","text"],
+      reportsDirectory: "./reports/coverage"
     },
     reporters: [
       "default",
-      "junit",
+      "junit"
     ],
-    outputFile: "./reports/vitest/vitest-report.xml",
+    outputFile: "./reports/vitest/vitest-report.xml"
   },
   server: {
-    port: 3000,
+    port: 3000
   },
   plugins: [
     ...VitePluginNode({
@@ -24,7 +24,7 @@ export default defineConfig({
       appPath: "./src/index.ts",
       exportName: "viteNodeApp",
       tsCompiler: "esbuild",
-      swcOptions: {},
-    }),
-  ],
+      swcOptions: {}
+    })
+  ]
 });
