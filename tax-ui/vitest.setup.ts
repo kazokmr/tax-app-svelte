@@ -23,9 +23,11 @@ vi.mock("$app/navigation", (): typeof navigation => ({
   goto: () => Promise.resolve(),
   invalidate: () => Promise.resolve(),
   invalidateAll: () => Promise.resolve(),
-  preloadData: () => Promise.resolve(),
+  preloadData: () => Promise.resolve({ type: "loaded", status: 200, data: {} }),
   preloadCode: () => Promise.resolve(),
   onNavigate: () => Promise.resolve(),
+  pushState: () => Promise.resolve(),
+  replaceState: () => Promise.resolve(),
 }));
 
 vi.mock("$app/stores", (): typeof stores => {
@@ -41,6 +43,7 @@ vi.mock("$app/stores", (): typeof stores => {
       error: null,
       data: {},
       form: undefined,
+      state: null,
     });
     const updated = { subscribe: readable(false).subscribe, check: async () => false };
 
