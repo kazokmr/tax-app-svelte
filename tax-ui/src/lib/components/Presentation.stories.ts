@@ -18,7 +18,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Standard: Story = {
   args: {
-    data: {
+    inputForm: {
       yearsOfService: 10,
       isDisability: false,
       isOfficer: "0",

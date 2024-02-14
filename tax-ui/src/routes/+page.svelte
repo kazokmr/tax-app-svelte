@@ -14,7 +14,7 @@
 </script>
 
 <Presentation
-  data="{data.form}"
+  inputForm="{data.form}"
   tax="{tax}"
   calcStatus="{calcStatus}"
   on:calculate="{handleResult}"

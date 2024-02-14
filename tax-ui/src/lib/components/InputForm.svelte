@@ -5,12 +5,13 @@
   import type { CalcStatus } from "$lib/modules/calcStatus";
   import type { InputSchema } from "$lib/schemas/inputSchema";
   import { inputSchema } from "$lib/schemas/inputSchema";
+  import { zod } from "sveltekit-superforms/adapters";
 
-  export let data: SuperValidated<InputSchema>;
+  export let inputForm: SuperValidated<InputSchema>;
   export let calcStatus: CalcStatus;
   const dispatch = createEventDispatcher();
-  const { form, errors, enhance } = superForm(data, {
-    validators: inputSchema,
+  const { form, errors, enhance } = superForm(inputForm, {
+    validators: zod(inputSchema),
     validationMethod: "auto",
     defaultValidator: "keep",
     onSubmit: () => {

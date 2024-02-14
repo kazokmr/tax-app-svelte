@@ -5,6 +5,7 @@ import { setupServer } from "msw/node";
 import { superValidate } from "sveltekit-superforms/server";
 import { inputSchema } from "$lib/schemas/inputSchema";
 import Page from "./+page.svelte";
+import { zod } from "sveltekit-superforms/adapters";
 
 const server = setupServer();
 
@@ -15,7 +16,7 @@ afterAll(() => server.close());
 describe("ページコンポーネント", async () => {
   test("初期表示の確認", async () => {
     // Begin
-    const form = await superValidate(inputSchema);
+    const form = await superValidate(zod(inputSchema));
     form.data.yearsOfService = 10;
     form.data.severancePay = 5_000_000;
     render(Page, { data: { form } });
@@ -32,7 +33,7 @@ describe("ページコンポーネント", async () => {
   });
   test("勤続年数を入力できる", async () => {
     // Begin
-    const form = await superValidate(inputSchema);
+    const form = await superValidate(zod(inputSchema));
     render(Page, { data: { form } });
 
     // When
@@ -46,7 +47,7 @@ describe("ページコンポーネント", async () => {
   });
   test("退職基因チェックボックスを選択できる", async () => {
     // Begin
-    const form = await superValidate(inputSchema);
+    const form = await superValidate(zod(inputSchema));
     render(Page, { data: { form } });
 
     // When
@@ -58,7 +59,7 @@ describe("ページコンポーネント", async () => {
   });
   test("退職基因チェックボックスを未選択にできる", async () => {
     // Begin
-    const form = await superValidate(inputSchema);
+    const form = await superValidate(zod(inputSchema));
     render(Page, { data: { form } });
 
     // When
@@ -72,7 +73,7 @@ describe("ページコンポーネント", async () => {
   });
   test("役員等を選択できる", async () => {
     // Begin
-    const form = await superValidate(inputSchema);
+    const form = await superValidate(zod(inputSchema));
     render(Page, { data: { form } });
 
     // When
@@ -86,7 +87,7 @@ describe("ページコンポーネント", async () => {
   });
   test("役員等以外を選択できる", async () => {
     // Begin
-    const form = await superValidate(inputSchema);
+    const form = await superValidate(zod(inputSchema));
     render(Page, { data: { form } });
 
     // When
@@ -100,7 +101,7 @@ describe("ページコンポーネント", async () => {
   });
   test("退職金を入力できる", async () => {
     // Begin
-    const form = await superValidate(inputSchema);
+    const form = await superValidate(zod(inputSchema));
     render(Page, { data: { form } });
 
     // When
@@ -123,7 +124,7 @@ describe("勤続年数のバリデーション", () => {
     ${"10.5"}           | ${"整数を入力してください"}
   `("勤続年数$yearsOfServiceValue", async ({ yearsOfServiceValue, errorMessage }) => {
     // Begin
-    const form = await superValidate(inputSchema);
+    const form = await superValidate(zod(inputSchema));
     render(Page, { data: { form } });
 
     // 事前確認
@@ -143,7 +144,7 @@ describe("勤続年数のバリデーション", () => {
   });
   test("未入力の場合", async () => {
     // Begin
-    const form = await superValidate(inputSchema);
+    const form = await superValidate(zod(inputSchema));
     form.data.yearsOfService = 10;
     render(Page, { data: { form } });
 
@@ -172,7 +173,7 @@ describe("退職金のバリデーション", () => {
     ${"8000000.1"}     | ${"１円単位で入力してください"}
   `("退職金$severancePayValue", async ({ severancePayValue, errorMessage }) => {
     // Begin
-    const form = await superValidate(inputSchema);
+    const form = await superValidate(zod(inputSchema));
     render(Page, { data: { form } });
 
     expect(screen.queryByText(errorMessage)).not.toBeInTheDocument();
@@ -191,7 +192,7 @@ describe("退職金のバリデーション", () => {
   });
   test("未入力の場合", async () => {
     // Begin
-    const form = await superValidate(inputSchema);
+    const form = await superValidate(zod(inputSchema));
     form.data.severancePay = 500000;
     render(Page, { data: { form } });
 
@@ -220,7 +221,7 @@ describe("勤続年数が入力できる", () => {
     ${"100"}
   `("勤続年数$yearsOfServiceValue", async ({ yearsOfServiceValue }) => {
     // Begin
-    const form = await superValidate(inputSchema);
+    const form = await superValidate(zod(inputSchema));
     render(Page, { data: { form } });
 
     // 事前確認
@@ -262,7 +263,7 @@ describe("退職金が入力できる", () => {
     ${"1000000000000"}
   `("退職金$severancePayValue", async ({ severancePayValue }) => {
     // Begin
-    const form = await superValidate(inputSchema);
+    const form = await superValidate(zod(inputSchema));
     render(Page, { data: { form } });
 
     // 事前確認

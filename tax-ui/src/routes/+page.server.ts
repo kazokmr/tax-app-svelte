@@ -4,15 +4,16 @@ import type { CalcTaxResult } from "$lib/fetch/client/calcTax";
 import { calcTax } from "$lib/fetch/client/calcTax";
 import { inputSchema } from "$lib/schemas/inputSchema";
 import type { Actions, PageServerLoad } from "./$types";
+import { zod } from "sveltekit-superforms/adapters";
 
 export const load = (async () => {
-  const form = await superValidate(inputSchema);
+  const form = await superValidate(zod(inputSchema));
   return { form };
 }) satisfies PageServerLoad;
 
 export const actions = {
   default: async ({ request, fetch }) => {
-    const form = await superValidate(request, inputSchema);
+    const form = await superValidate(request, zod(inputSchema));
     if (!form.valid) {
       return fail(400, { form, tax: 0 });
     }
