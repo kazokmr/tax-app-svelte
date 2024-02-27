@@ -1,8 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/svelte";
 import InputForm from "./InputForm.svelte";
+import { fn } from "@storybook/test";
 
 const meta = {
   component: InputForm,
+  args: { onClick: fn() },
   parameters: {
     sveltekit_experimental: {
       stores: {
