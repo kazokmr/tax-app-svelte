@@ -1,7 +1,7 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
   import type { SuperValidated } from "sveltekit-superforms";
-  import { superForm } from "sveltekit-superforms/client";
+  import { superForm } from "sveltekit-superforms";
   import type { CalcStatus } from "$lib/modules/calcStatus";
   import type { InputSchema } from "$lib/schemas/inputSchema";
   import { inputSchema } from "$lib/schemas/inputSchema";

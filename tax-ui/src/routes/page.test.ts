@@ -1,5 +1,4 @@
 import { render, screen, waitFor } from "@testing-library/svelte";
-import "@testing-library/jest-dom/vitest";
 import userEvent from "@testing-library/user-event";
 import { setupServer } from "msw/node";
 import { superValidate } from "sveltekit-superforms/server";
