@@ -4,9 +4,6 @@ import { INITIAL_VIEWPORTS, MINIMAL_VIEWPORTS } from "@storybook/addon-viewport"
 
 const preview: Preview = {
   parameters: {
-    actions: {
-      argTypesRegex: "^on.*",
-    },
     controls: {
       matchers: {
         color: /(background|color)$/i,
