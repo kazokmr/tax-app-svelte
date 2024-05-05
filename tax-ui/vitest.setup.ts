@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
 import "@testing-library/jest-dom/vitest";
 import "@testing-library/svelte/vitest";
 import { readable } from "svelte/store";

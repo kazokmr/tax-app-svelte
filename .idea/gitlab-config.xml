@@ -8,6 +8,11 @@
             <GitlabConfigState />
           </value>
         </entry>
+        <entry key="tax-app-svelte">
+          <value>
+            <GitlabConfigState />
+          </value>
+        </entry>
       </map>
     </option>
   </component>
