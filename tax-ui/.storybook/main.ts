@@ -7,13 +7,12 @@ const config: StorybookConfig = {
     "@storybook/addon-essentials",
     "@storybook/addon-interactions",
     "@storybook/addon-mdx-gfm",
+    "@chromatic-com/storybook",
   ],
   framework: {
     name: "@storybook/sveltekit",
     options: {},
   },
-  docs: {
-    autodocs: "tag",
-  },
+  docs: {},
 };
 export default config;
