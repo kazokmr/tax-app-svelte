@@ -4,9 +4,9 @@
   "version": "1.0.0",
   "license": "MIT",
   "engines": {
-    "node": "20.x"
+    "node": ">= 20"
   },
-  "packageManager": "pnpm@10.5.2+sha512.da9dc28cd3ff40d0592188235ab25d3202add8a207afbedc682220e4a0029ffbff4562102b9e6e46b4e3f9e8bd53e6d05de48544b0c57d4b0179e22c76d1199b",
+  "packageManager": "pnpm@10.7.1+sha512.2d92c86b7928dc8284f53494fb4201f983da65f0fb4f0d40baafa5cf628fa31dae3e5968f12466f17df7e97310e30f343a648baea1b9b350685dafafffdf5808",
   "scripts": {
     "dev": "vite",
     "check": "tsc --noEmit",
@@ -15,28 +15,28 @@
     "test": "vitest run --coverage"
   },
   "devDependencies": {
-    "@eslint/js": "^9.21.0",
+    "@eslint/js": "^9.24.0",
     "@types/cors": "^2.8.17",
-    "@types/express": "^5.0.0",
-    "@types/node": "^22.13.8",
-    "@types/supertest": "^6.0.2",
-    "@typescript-eslint/eslint-plugin": "^8.25.0",
-    "@typescript-eslint/parser": "^8.25.0",
-    "@vitest/coverage-v8": "^3.0.7",
-    "eslint": "^9.21.0",
-    "eslint-config-prettier": "^10.0.2",
+    "@types/express": "^5.0.1",
+    "@types/node": "^22.14.0",
+    "@types/supertest": "^6.0.3",
+    "@typescript-eslint/eslint-plugin": "^8.29.0",
+    "@typescript-eslint/parser": "^8.29.0",
+    "@vitest/coverage-v8": "^3.1.1",
+    "eslint": "^9.24.0",
+    "eslint-config-prettier": "^10.1.1",
     "globals": "^16.0.0",
-    "prettier": "^3.5.2",
-    "supertest": "^7.0.0",
-    "typescript": "^5.8.2",
-    "typescript-eslint": "^8.25.0",
-    "vite": "^6.2.0",
-    "vite-plugin-node": "^4.0.0",
-    "vitest": "^3.0.7"
+    "prettier": "^3.5.3",
+    "supertest": "^7.1.0",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.29.0",
+    "vite": "^6.2.5",
+    "vite-plugin-node": "^5.0.0",
+    "vitest": "^3.1.1"
   },
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.21.2",
+    "express": "^5.1.0",
     "zod": "^3.24.2"
   },
   "peerDependencies": {
