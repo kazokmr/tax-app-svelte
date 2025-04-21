@@ -1,34 +1,37 @@
 <script lang="ts">
-  import { createEventDispatcher } from "svelte";
-  import type { SuperValidated } from "sveltekit-superforms";
+  import type { Infer, SuperValidated } from "sveltekit-superforms";
   import { superForm } from "sveltekit-superforms";
   import type { CalcStatus } from "$lib/modules/calcStatus";
   import type { InputSchema } from "$lib/schemas/inputSchema";
   import { inputSchema } from "$lib/schemas/inputSchema";
-  import { zod } from "sveltekit-superforms/adapters";
+  import { zodClient } from "sveltekit-superforms/adapters";
 
-  export let inputForm: SuperValidated<InputSchema>;
-  export let calcStatus: CalcStatus;
-  const dispatch = createEventDispatcher();
+  interface Props {
+    inputForm: SuperValidated<Infer<InputSchema>>;
+    calcStatus: CalcStatus;
+    handleResult: (inputTax: number) => void;
+    handleCalcStatus: (status: CalcStatus) => void;
+  }
+
+  let { inputForm, calcStatus, handleResult, handleCalcStatus }: Props = $props();
   const { form, errors, enhance } = superForm(inputForm, {
-    validators: zod(inputSchema),
+    validators: zodClient(inputSchema),
     validationMethod: "auto",
-    defaultValidator: "keep",
     onSubmit: () => {
-      dispatch("changeStatus", { calcStatus: "under-calculation" });
+      handleCalcStatus("under-calculation");
     },
     onResult: ({ result }) => {
       if (result.type === "success") {
-        dispatch("calculate", { tax: result.data?.tax });
-        dispatch("changeStatus", { calcStatus: "succeeded" });
+        handleResult(result.data?.tax);
+        handleCalcStatus("succeeded");
       } else if (result.type === "failure" && !result.data?.form.valid) {
-        dispatch("changeStatus", { calcStatus: "before-calculation" });
+        handleCalcStatus("before-calculation");
       } else {
-        dispatch("changeStatus", { calcStatus: "failed" });
+        handleCalcStatus("failed");
       }
     },
     onError: () => {
-      dispatch("changeStatus", { calcStatus: "failed" });
+      handleCalcStatus("failed");
     },
   });
 </script>
@@ -39,7 +42,7 @@
   </div>
   <div>
     <form method="POST" use:enhance>
-      <label for="yearsOfService" class="mx-3 mb-2 mt-3 block text-base font-medium text-gray-900">
+      <label for="yearsOfService" class="mx-3 mt-3 mb-2 block text-base font-medium text-gray-900">
         勤続年数
       </label>
       <div class="ml-4 inline-flex">
@@ -49,33 +52,33 @@
           id="yearsOfService"
           class="block w-24 flex-1 rounded-none rounded-l-lg border border-gray-300 p-2.5 text-base text-gray-900 focus:border-blue-500 focus:ring-blue-500"
           aria-required="true"
-          aria-invalid="{$errors.yearsOfService ? 'true' : undefined}"
-          bind:value="{$form.yearsOfService}"
+          aria-invalid={$errors.yearsOfService ? "true" : undefined}
+          bind:value={$form.yearsOfService}
         />
         <span
           class="inline-flex items-center rounded-r-md border border-l-0 border-gray-300 bg-gray-200 px-2.5 text-base text-gray-900"
         >
           年
         </span>
-        <span class="pl-4 pt-4 text-sm text-gray-500">1年未満の端数は切り上げ</span>
+        <span class="pt-4 pl-4 text-sm text-gray-500">1年未満の端数は切り上げ</span>
       </div>
       {#if $errors.yearsOfService}
         <div class="ml-4 text-red-500">{$errors.yearsOfService}</div>
       {/if}
-      <p class="mx-3 mb-2 mt-3 block text-base font-medium text-gray-900">退職基因</p>
+      <p class="mx-3 mt-3 mb-2 block text-base font-medium text-gray-900">退職基因</p>
       <div class="ml-4 flex items-center">
         <label class="ml-2 text-base font-normal text-gray-900">
           <input
             type="checkbox"
             name="isDisability"
-            class="focus:ring-3 h-4 w-4 rounded border border-gray-300 bg-gray-50 focus:ring-blue-300"
+            class="h-4 w-4 rounded border border-gray-300 bg-gray-50 focus:ring-3 focus:ring-blue-300"
             aria-required="true"
-            bind:checked="{$form.isDisability}"
+            bind:checked={$form.isDisability}
           />
           障害者となったことに直接基因して退職した
         </label>
       </div>
-      <p class="mx-3 mb-2 mt-3 block text-base font-medium text-gray-900">役員等以外か役員等か</p>
+      <p class="mx-3 mt-3 mb-2 block text-base font-medium text-gray-900">役員等以外か役員等か</p>
       <div class="ml-4 flex">
         <div class="mr-4 flex items-center">
           <label class="ml-2 text-base font-normal text-gray-900">
@@ -84,7 +87,7 @@
               name="isOfficer"
               value="0"
               class="h-4 w-4 border-gray-300 bg-gray-100 text-blue-600 focus:ring-blue-500"
-              bind:group="{$form.isOfficer}"
+              bind:group={$form.isOfficer}
             />
             役員等以外
           </label>
@@ -96,13 +99,13 @@
               name="isOfficer"
               value="1"
               class="h-4 w-4 border-gray-300 bg-gray-100 text-blue-600 focus:ring-blue-500"
-              bind:group="{$form.isOfficer}"
+              bind:group={$form.isOfficer}
             />
             役員等
           </label>
         </div>
       </div>
-      <label for="severancePay" class="mx-3 mb-2 mt-3 block text-base font-medium text-gray-900">
+      <label for="severancePay" class="mx-3 mt-3 mb-2 block text-base font-medium text-gray-900">
         退職金
       </label>
       <div class="ml-4 inline-flex">
@@ -112,8 +115,8 @@
           id="severancePay"
           class=" block w-36 flex-1 rounded-none rounded-l-lg border border-gray-300 p-2.5 text-base text-gray-900 focus:border-blue-500 focus:ring-blue-500"
           aria-required="true"
-          aria-invalid="{$errors.severancePay ? 'true' : undefined}"
-          bind:value="{$form.severancePay}"
+          aria-invalid={$errors.severancePay ? "true" : undefined}
+          bind:value={$form.severancePay}
         />
         <span
           class="inline-flex items-center rounded-r-md border border-l-0 border-gray-300 bg-gray-200 px-2.5 text-base text-gray-900"
@@ -127,8 +130,8 @@
       <div class="m-3">
         <button
           type="submit"
-          class="mb-2 ml-auto mr-2 block rounded-lg bg-blue-600 px-3 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:ring-4 focus:ring-blue-300"
-          disabled="{calcStatus === 'under-calculation'}"
+          class="mr-2 mb-2 ml-auto block rounded-lg bg-blue-600 px-3 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:ring-4 focus:ring-blue-300"
+          disabled={calcStatus === "under-calculation"}
         >
           {#if calcStatus === "under-calculation"}
             <svg

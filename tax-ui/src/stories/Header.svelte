@@ -3,7 +3,11 @@
   import Button from "./Button.svelte";
   import "./header.css";
 
-  export let user: { name: string } | null = null;
+  interface Props {
+    user?: { name: string } | null;
+  }
+
+  let { user = null }: Props = $props();
 
   const dispatch = createEventDispatcher();
 

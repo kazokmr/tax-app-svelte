@@ -1,9 +1,13 @@
 <script lang="ts">
   import type { CalcStatus } from "$lib/modules/calcStatus";
 
-  export let tax: number;
-  export let calcStatus: CalcStatus;
-  $: taxStr = new Intl.NumberFormat("ja-JP").format(tax);
+  interface Props {
+    tax: number;
+    calcStatus: CalcStatus;
+  }
+
+  let { tax, calcStatus }: Props = $props();
+  let taxStr = $derived(new Intl.NumberFormat("ja-JP").format(tax));
 </script>
 
 <div class="h-[510px] w-96 rounded-xl border-2">

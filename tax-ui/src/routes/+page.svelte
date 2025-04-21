@@ -1,22 +1,23 @@
 <script lang="ts">
   import Presentation from "$lib/components/Presentation.svelte";
-  import type InputForm from "$lib/components/InputForm.svelte";
   import type { CalcStatus } from "$lib/modules/calcStatus";
   import type { PageData } from "./$types";
-  import type { ComponentEvents } from "svelte";
 
-  export let data: PageData;
-  let tax: number;
-  let calcStatus: CalcStatus = "before-calculation";
-  const handleResult = (event: ComponentEvents<InputForm>["tax"]) => (tax = event.detail.tax);
-  const handleCalcStatus = (event: ComponentEvents<InputForm>["calcStatus"]) =>
-    (calcStatus = event.detail.calcStatus);
+  interface Props {
+    data: PageData;
+  }
+
+  let { data }: Props = $props();
+  let tax: number = $state(0);
+  let calcStatus: CalcStatus = $state("before-calculation");
+  const handleResult = (inputTax: number) => (tax = inputTax);
+  const handleCalcStatus = (status: CalcStatus) => (calcStatus = status);
 </script>
 
 <Presentation
-  inputForm="{data.form}"
-  tax="{tax}"
-  calcStatus="{calcStatus}"
-  on:calculate="{handleResult}"
-  on:changeStatus="{handleCalcStatus}"
+  inputForm={data.form}
+  tax={tax}
+  calcStatus={calcStatus}
+  handleResult={handleResult}
+  handleCalcStatus={handleCalcStatus}
 />
