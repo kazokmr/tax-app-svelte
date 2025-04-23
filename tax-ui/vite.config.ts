@@ -1,7 +1,7 @@
 import { configDefaults, defineConfig } from "vitest/config";
 import { sveltekit } from "@sveltejs/kit/vite";
-import tailwindcss from "@tailwindcss/vite";
 import { svelteTesting } from "@testing-library/svelte/vite";
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   plugins: [sveltekit(), tailwindcss(), svelteTesting()],
@@ -12,4 +12,5 @@ export default defineConfig({
     setupFiles: ["./vitest.setup.ts"],
     exclude: [...configDefaults.exclude, "tests/**"],
   },
+  resolve: process.env.VITEST ? { conditions: ["browser"] } : undefined,
 });

@@ -1,16 +1,9 @@
 import { render, screen, waitFor } from "@testing-library/svelte";
 import userEvent from "@testing-library/user-event";
-import { setupServer } from "msw/node";
 import { superValidate } from "sveltekit-superforms/server";
 import { inputSchema } from "$lib/schemas/inputSchema";
 import Page from "./+page.svelte";
 import { zod } from "sveltekit-superforms/adapters";
-
-const server = setupServer();
-
-beforeAll(() => server.listen());
-afterEach(() => server.resetHandlers());
-afterAll(() => server.close());
 
 describe("ページコンポーネント", async () => {
   test("初期表示の確認", async () => {
@@ -21,15 +14,16 @@ describe("ページコンポーネント", async () => {
     render(Page, { data: { form } });
 
     // Then
-    expect(screen.getByRole("spinbutton", { name: "勤続年数" })).toHaveValue(10);
-    expect(
-      screen.getByRole("checkbox", { name: "障害者となったことに直接基因して退職した" }),
-    ).not.toBeChecked();
-    expect(screen.getByRole("radio", { name: "役員等以外" })).toBeChecked();
-    expect(screen.getByRole("radio", { name: "役員等" })).not.toBeChecked();
-    expect(screen.getByRole("spinbutton", { name: "退職金" })).toHaveValue(5_000_000);
-    expect(screen.getByLabelText("tax").textContent).toBe("--- 円");
+    expect.soft(screen.getByRole("spinbutton", { name: "勤続年数" })).toHaveValue(10);
+    expect
+      .soft(screen.getByRole("checkbox", { name: "障害者となったことに直接基因して退職した" }))
+      .not.toBeChecked();
+    expect.soft(screen.getByRole("radio", { name: "役員等以外" })).toBeChecked();
+    expect.soft(screen.getByRole("radio", { name: "役員等" })).not.toBeChecked();
+    expect.soft(screen.getByRole("spinbutton", { name: "退職金" })).toHaveValue(5_000_000);
+    expect.soft(screen.getByLabelText("tax").textContent).toBe("--- 円");
   });
+
   test("勤続年数を入力できる", async () => {
     // Begin
     const form = await superValidate(zod(inputSchema));
@@ -44,6 +38,7 @@ describe("ページコンポーネント", async () => {
     // Then
     expect(await screen.findByRole("spinbutton", { name: "勤続年数" })).toHaveValue(20);
   });
+
   test("退職基因チェックボックスを選択できる", async () => {
     // Begin
     const form = await superValidate(zod(inputSchema));
@@ -56,6 +51,7 @@ describe("ページコンポーネント", async () => {
     // Then
     expect(screen.getByRole("checkbox", { name: /障害者/i })).toBeChecked();
   });
+
   test("退職基因チェックボックスを未選択にできる", async () => {
     // Begin
     const form = await superValidate(zod(inputSchema));
@@ -70,6 +66,7 @@ describe("ページコンポーネント", async () => {
     await screen.findByRole("checkbox", { name: /障害者/i });
     expect(screen.getByRole("checkbox", { name: /障害者/i })).not.toBeChecked();
   });
+
   test("役員等を選択できる", async () => {
     // Begin
     const form = await superValidate(zod(inputSchema));
@@ -81,9 +78,10 @@ describe("ページコンポーネント", async () => {
     await user.click(screen.getByRole("radio", { name: "役員等" }));
 
     // Then
-    expect(screen.getByRole("radio", { name: "役員等" })).toBeChecked();
-    expect(screen.getByRole("radio", { name: "役員等以外" })).not.toBeChecked();
+    expect.soft(screen.getByRole("radio", { name: "役員等" })).toBeChecked();
+    expect.soft(screen.getByRole("radio", { name: "役員等以外" })).not.toBeChecked();
   });
+
   test("役員等以外を選択できる", async () => {
     // Begin
     const form = await superValidate(zod(inputSchema));
@@ -95,9 +93,10 @@ describe("ページコンポーネント", async () => {
     await user.click(screen.getByRole("radio", { name: "役員等以外" }));
 
     // Then
-    expect(screen.getByRole("radio", { name: "役員等" })).not.toBeChecked();
-    expect(screen.getByRole("radio", { name: "役員等以外" })).toBeChecked();
+    expect.soft(screen.getByRole("radio", { name: "役員等" })).not.toBeChecked();
+    expect.soft(screen.getByRole("radio", { name: "役員等以外" })).toBeChecked();
   });
+
   test("退職金を入力できる", async () => {
     // Begin
     const form = await superValidate(zod(inputSchema));
@@ -127,7 +126,7 @@ describe("勤続年数のバリデーション", () => {
     render(Page, { data: { form } });
 
     // 事前確認
-    expect(screen.queryByText(errorMessage)).not.toBeInTheDocument();
+    expect.soft(screen.queryByText(errorMessage)).not.toBeInTheDocument();
 
     // When
     const user = userEvent.setup();
@@ -138,9 +137,10 @@ describe("勤続年数のバリデーション", () => {
     await user.tab();
 
     // Then
-    expect(await screen.findByText(errorMessage)).toBeInTheDocument();
-    expect(screen.getByLabelText("tax")).toHaveTextContent("--- 円");
+    expect.soft(await screen.findByText(errorMessage)).toBeInTheDocument();
+    expect.soft(screen.getByLabelText("tax")).toHaveTextContent("--- 円");
   });
+
   test("未入力の場合", async () => {
     // Begin
     const form = await superValidate(zod(inputSchema));
@@ -148,7 +148,9 @@ describe("勤続年数のバリデーション", () => {
     render(Page, { data: { form } });
 
     // 事前確認
-    expect(screen.queryByText("勤続年数は１以上の整数を入力してください")).not.toBeInTheDocument();
+    expect
+      .soft(screen.queryByText("勤続年数は１以上の整数を入力してください"))
+      .not.toBeInTheDocument();
 
     // When
     const user = userEvent.setup();
@@ -160,7 +162,7 @@ describe("勤続年数のバリデーション", () => {
     await user.tab();
 
     // Then
-    expect(screen.getByText("勤続年数は１以上の整数を入力してください")).toBeInTheDocument();
+    expect.soft(screen.getByText("勤続年数は１以上の整数を入力してください")).toBeInTheDocument();
   });
 });
 
@@ -175,7 +177,7 @@ describe("退職金のバリデーション", () => {
     const form = await superValidate(zod(inputSchema));
     render(Page, { data: { form } });
 
-    expect(screen.queryByText(errorMessage)).not.toBeInTheDocument();
+    expect.soft(screen.queryByText(errorMessage)).not.toBeInTheDocument();
 
     // When
     const user = userEvent.setup();
@@ -186,9 +188,10 @@ describe("退職金のバリデーション", () => {
     await user.tab();
 
     // Then
-    expect(await screen.findByText(errorMessage)).toBeInTheDocument();
-    expect(screen.getByLabelText("tax")).toHaveTextContent("--- 円");
+    expect.soft(await screen.findByText(errorMessage)).toBeInTheDocument();
+    expect.soft(screen.getByLabelText("tax")).toHaveTextContent("--- 円");
   });
+
   test("未入力の場合", async () => {
     // Begin
     const form = await superValidate(zod(inputSchema));
@@ -196,7 +199,7 @@ describe("退職金のバリデーション", () => {
     render(Page, { data: { form } });
 
     // 事前確認
-    expect(screen.queryByText("退職金を入力してください")).not.toBeInTheDocument();
+    expect.soft(screen.queryByText("退職金を入力してください")).not.toBeInTheDocument();
 
     // When
     const user = userEvent.setup();
@@ -208,7 +211,7 @@ describe("退職金のバリデーション", () => {
     await user.tab();
 
     // Then
-    expect(screen.getByText("退職金を入力してください")).toBeInTheDocument();
+    expect.soft(screen.getByText("退職金を入力してください")).toBeInTheDocument();
   });
 });
 
@@ -231,7 +234,7 @@ describe("勤続年数が入力できる", () => {
 
     // エラーメッセージが出ることを確認する
     await user.tab();
-    expect(await screen.findByText("１以上の整数を入力してください")).toBeInTheDocument();
+    expect.soft(await screen.findByText("１以上の整数を入力してください")).toBeInTheDocument();
 
     // When
     await user.click(screen.getByRole("spinbutton", { name: "勤続年数" }));
@@ -243,16 +246,17 @@ describe("勤続年数が入力できる", () => {
     // Then
     // メッセージが非表示となること
     await waitFor(() => {
-      expect(screen.queryByText("勤続年数を入力してください")).not.toBeInTheDocument();
-      expect(
-        screen.queryByText("勤続年数は１以上の整数を入力してください"),
-      ).not.toBeInTheDocument();
-      expect(screen.queryByText("整数を入力してください")).not.toBeInTheDocument();
-      expect(screen.queryByText("１以上の整数を入力してください")).not.toBeInTheDocument();
-      expect(screen.queryByText("１００以下の整数を入力してください")).not.toBeInTheDocument();
+      expect.soft(screen.queryByText("勤続年数を入力してください")).not.toBeInTheDocument();
+      expect
+        .soft(screen.queryByText("勤続年数は１以上の整数を入力してください"))
+        .not.toBeInTheDocument();
+      expect.soft(screen.queryByText("整数を入力してください")).not.toBeInTheDocument();
+      expect.soft(screen.queryByText("１以上の整数を入力してください")).not.toBeInTheDocument();
+      expect.soft(screen.queryByText("１００以下の整数を入力してください")).not.toBeInTheDocument();
     });
   });
 });
+
 describe("退職金が入力できる", () => {
   test.each`
     severancePayValue
@@ -273,7 +277,7 @@ describe("退職金が入力できる", () => {
 
     // エラーメッセージが出ることを確認する
     await user.tab();
-    expect(await screen.findByText("０円以上を入力してください")).toBeInTheDocument();
+    expect.soft(await screen.findByText("０円以上を入力してください")).toBeInTheDocument();
 
     // When
     await user.click(screen.getByRole("spinbutton", { name: "退職金" }));
@@ -285,10 +289,10 @@ describe("退職金が入力できる", () => {
     // Then
     // メッセージが非表示となること
     await waitFor(() => {
-      expect(screen.queryByText("退職金を入力してください")).not.toBeInTheDocument();
-      expect(screen.queryByText("１円以上を入力してください")).not.toBeInTheDocument();
-      expect(screen.queryByText("０円以上を入力してください")).not.toBeInTheDocument();
-      expect(screen.queryByText("1,000,000,000,000円までです")).not.toBeInTheDocument();
+      expect.soft(screen.queryByText("退職金を入力してください")).not.toBeInTheDocument();
+      expect.soft(screen.queryByText("１円以上を入力してください")).not.toBeInTheDocument();
+      expect.soft(screen.queryByText("０円以上を入力してください")).not.toBeInTheDocument();
+      expect.soft(screen.queryByText("1,000,000,000,000円までです")).not.toBeInTheDocument();
     });
   });
 });
