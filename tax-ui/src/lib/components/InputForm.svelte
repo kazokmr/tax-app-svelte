@@ -8,30 +8,33 @@
 
   interface Props {
     inputForm: SuperValidated<Infer<InputSchema>>;
+    tax: number;
     calcStatus: CalcStatus;
-    handleResult: (inputTax: number) => void;
-    handleCalcStatus: (status: CalcStatus) => void;
   }
 
-  let { inputForm, calcStatus, handleResult, handleCalcStatus }: Props = $props();
+  let {
+    inputForm,
+    tax = $bindable(0),
+    calcStatus = $bindable("before-calculation"),
+  }: Props = $props();
   const { form, errors, enhance } = superForm(inputForm, {
     validators: zodClient(inputSchema),
     validationMethod: "auto",
     onSubmit: () => {
-      handleCalcStatus("under-calculation");
+      calcStatus = "under-calculation";
     },
     onResult: ({ result }) => {
       if (result.type === "success") {
-        handleResult(result.data?.tax);
-        handleCalcStatus("succeeded");
+        tax = result.data?.tax ?? 0;
+        calcStatus = "succeeded";
       } else if (result.type === "failure" && !result.data?.form.valid) {
-        handleCalcStatus("before-calculation");
+        calcStatus = "before-calculation";
       } else {
-        handleCalcStatus("failed");
+        calcStatus = "failed";
       }
     },
     onError: () => {
-      handleCalcStatus("failed");
+      calcStatus = "failed";
     },
   });
 </script>
