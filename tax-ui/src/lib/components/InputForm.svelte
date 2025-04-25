@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Infer, SuperValidated } from "sveltekit-superforms";
+  import type { SuperValidated } from "sveltekit-superforms";
   import { superForm } from "sveltekit-superforms";
   import type { CalcStatus } from "$lib/modules/calcStatus";
   import type { InputSchema } from "$lib/schemas/inputSchema";
@@ -7,7 +7,7 @@
   import { zodClient } from "sveltekit-superforms/adapters";
 
   interface Props {
-    inputForm: SuperValidated<Infer<InputSchema>>;
+    inputForm: SuperValidated<InputSchema>;
     tax: number;
     calcStatus: CalcStatus;
   }
@@ -17,6 +17,7 @@
     tax = $bindable(0),
     calcStatus = $bindable("before-calculation"),
   }: Props = $props();
+
   const { form, errors, enhance } = superForm(inputForm, {
     validators: zodClient(inputSchema),
     validationMethod: "auto",

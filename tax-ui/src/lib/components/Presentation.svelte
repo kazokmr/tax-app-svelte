@@ -1,12 +1,12 @@
 <script lang="ts">
-  import type { Infer, SuperValidated } from "sveltekit-superforms";
+  import type { SuperValidated } from "sveltekit-superforms";
   import type { InputSchema } from "$lib/schemas/inputSchema";
   import type { CalcStatus } from "$lib/modules/calcStatus";
   import InputForm from "$lib/components/InputForm.svelte";
   import Result from "$lib/components/Result.svelte";
 
   interface Props {
-    inputForm: SuperValidated<Infer<InputSchema>>;
+    inputForm: SuperValidated<InputSchema>;
     calcStatus: CalcStatus;
     tax: number;
   }
