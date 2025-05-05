@@ -3,9 +3,9 @@
   import Presentation from "$lib/components/Presentation.svelte";
   import type { CalcStatus } from "$lib/modules/calcStatus";
 
-  interface Props {
+  type Props = {
     data: PageData;
-  }
+  };
 
   let { data }: Props = $props();
   let tax = $state(0);

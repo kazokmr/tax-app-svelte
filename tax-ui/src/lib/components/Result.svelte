@@ -1,10 +1,10 @@
 <script lang="ts">
   import type { CalcStatus } from "$lib/modules/calcStatus";
 
-  interface Props {
+  type Props = {
     tax: number;
     calcStatus: CalcStatus;
-  }
+  };
 
   let { tax, calcStatus }: Props = $props();
   let taxStr = $derived(new Intl.NumberFormat("ja-JP").format(tax));

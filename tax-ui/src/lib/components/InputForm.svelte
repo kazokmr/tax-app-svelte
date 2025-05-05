@@ -6,11 +6,11 @@
   import { inputSchema } from "$lib/schemas/inputSchema";
   import { zodClient } from "sveltekit-superforms/adapters";
 
-  interface Props {
+  type Props = {
     inputForm: SuperValidated<InputSchema>;
     tax: number;
     calcStatus: CalcStatus;
-  }
+  };
 
   let {
     inputForm,

@@ -9,9 +9,15 @@ export default ts.config([
     ignores: ["**/build", "**/.svelte-kit", "**/package", "**/storybook-static"],
   },
   js.configs.recommended,
-  ...ts.configs.recommended,
-  ...svelte.configs.recommended,
-  { languageOptions: { globals: { ...globals.browser, ...globals.node } } },
+  ts.configs.strict,
+  ts.configs.stylistic,
+  {
+    rules: {
+      "@typescript-eslint/consistent-type-definitions": ["error", "type"],
+    },
+  },
+  svelte.configs.recommended,
+  { languageOptions: { globals: { ...globals.browser, ...globals.vitest } } },
   {
     files: ["**/*.svelte", "**/*.svelte.ts", "**/*.svelte.js"],
     languageOptions: {

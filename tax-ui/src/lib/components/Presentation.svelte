@@ -5,11 +5,11 @@
   import InputForm from "$lib/components/InputForm.svelte";
   import Result from "$lib/components/Result.svelte";
 
-  interface Props {
+  type Props = {
     inputForm: SuperValidated<InputSchema>;
     calcStatus: CalcStatus;
     tax: number;
-  }
+  };
 
   let {
     inputForm,
