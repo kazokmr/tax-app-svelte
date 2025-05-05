@@ -4,7 +4,7 @@
   "license": "MIT",
   "version": "1.0.0",
   "engines": {
-    "node": ">= 20"
+    "node": ">= 22"
   },
   "packageManager": "pnpm@10.10.0+sha512.d615db246fe70f25dcfea6d8d73dee782ce23e2245e3c4f6f888249fb568149318637dca73c2c5c8ef2a4ca0d5657fb9567188bfab47f566d1ee6ce987815c39",
   "scripts": {
@@ -44,9 +44,8 @@
     "@testing-library/user-event": "^14.6.1",
     "@types/jsdom": "^21.1.7",
     "@types/json-server": "^0.14.8",
-    "@typescript-eslint/eslint-plugin": "^8.31.1",
-    "@typescript-eslint/parser": "^8.31.1",
     "autoprefixer": "^10.4.21",
+    "eslint": "^9.26.0",
     "eslint-config-prettier": "^10.1.2",
     "eslint-plugin-svelte": "^3.5.1",
     "globals": "^16.0.0",
@@ -63,28 +62,11 @@
     "testcontainers": "^10.25.0",
     "tslib": "^2.8.1",
     "typescript": "^5.8.3",
-    "typescript-eslint": "^8.31.1",
+    "typescript-eslint": "^8.32.0",
     "vite": "^6.3.5",
-    "vitest": "^3.1.2",
+    "vitest": "^3.1.3",
     "wiremock-captain": "^4.1.0",
     "zod": "^3.24.4"
   },
-  "type": "module",
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "@sveltejs/kit",
-      "cpu-features",
-      "esbuild",
-      "msw",
-      "protobufjs",
-      "ssh2"
-    ],
-    "ignoredBuiltDependencies": [
-      "protobufjs",
-      "svelte-preprocess"
-    ]
-  },
-  "dependencies": {
-    "eslint": "^9.26.0"
-  }
+  "type": "module"
 }
